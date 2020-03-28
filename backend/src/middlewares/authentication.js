@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { to } = require("../utils");
+const { to, dbg } = require("../utils");
 const { getGammaUri, postGammaToken } = require("../utils/gamma");
 
 const getAuthenticationMiddleware = () => {
@@ -32,9 +32,19 @@ const getAuthenticationMiddleware = () => {
                     //Todo set the maxAge to something that expires_in.
                     //req.session.cookie.maxAge = expires_in;
                     payload = jwt.decode(access_token);
+                    if (process.env.ADMINS) {
+                        const admins = dbg(process.env.ADMINS.split(","));
+                        req.session.isAdmin = admins.includes(
+                            payload.user_name
+                        );
+                    } else {
+                        req.session.isAdmin = false;
+                    }
+
                     req.session.uid = payload.uid;
                     req.session.cid = payload.user_name;
                     req.session.nick = payload.nick;
+
                     req.session.save(err => console.log(err));
                     res.status(200).send("session created");
                 }

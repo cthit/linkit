@@ -9,6 +9,8 @@ services:
             - 4000:4000
         volumes:
             - ./backend:/usr/src/app
+        environment:
+            ADMINS: admin
         depends_on:
             - redis
             - gamma-backend

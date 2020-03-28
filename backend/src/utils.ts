@@ -38,7 +38,16 @@ export const initDB = (host = "db", port = 5432) => {
     return pool;
 };
 
-const query = (sql: string, values: any, convertResult: (value: any) => void) =>
+export function dbg<T>(x: T) {
+    console.debug(x);
+    return x;
+}
+
+export const query = (
+    sql: string,
+    values: any,
+    convertResult: (value: any) => void
+) =>
     new Promise((resolve, reject) => {
         pool.query(sql, values, (errors, results) => {
             if (errors) {
@@ -49,7 +58,7 @@ const query = (sql: string, values: any, convertResult: (value: any) => void) =>
         });
     });
 
-const to = (promise: Promise<any>) => {
+export const to = <T>(promise: Promise<T>) => {
     return promise
         .then(data => {
             return [null, data];
@@ -57,13 +66,13 @@ const to = (promise: Promise<any>) => {
         .catch(err => [err]);
 };
 
-const v4UUIDPattern = new RegExp(
+export const v4UUIDPattern = new RegExp(
     /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
 );
 
-const isUUID = (uuid: string) => uuid.match(v4UUIDPattern);
+export const isUUID = (uuid: string) => uuid.match(v4UUIDPattern);
 
-const renameProp = (
+export const renameProp = (
     oldProp: any,
     newProp: any,
     { [oldProp]: old, ...others }

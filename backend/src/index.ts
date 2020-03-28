@@ -1,5 +1,6 @@
 import { initExpress, initDB } from "./utils";
 import LinkController from "./controllers/LinkController";
+import UserController from "./controllers/UserController";
 const { getSessionMiddleware } = require("./middlewares/session");
 const { getAuthenticationMiddleware } = require("./middlewares/authentication");
 const { getRequireBodyOnPost } = require("./middlewares/require-body-on-post");
@@ -12,3 +13,4 @@ app.use(getAuthenticationMiddleware());
 app.use(getRequireBodyOnPost());
 
 LinkController(app);
+UserController(app);
