@@ -34,9 +34,9 @@ export const initDB = (host = "db", port = 5432) => {
         host: host,
         port: port,
     });
-};
 
-const getPool = () => pool;
+    return pool;
+};
 
 const query = (sql: string, values: any, convertResult: (value: any) => void) =>
     new Promise((resolve, reject) => {
