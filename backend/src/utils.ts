@@ -1,13 +1,12 @@
 import * as express from "express";
 import { createServer } from "http";
-//remove for: app.use(express.urlencoded({extended: true));
+import { createConnection, Connection, ObjectType } from "typeorm";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 
-import { Pool } from "pg";
-var pool: Pool = null;
+var conn: Connection = null;
 
-export const initExpress = (port: Number) => {
+export const initExpress = (port: Number = 4000) => {
     const app = express();
     const server = createServer(app);
 
@@ -24,39 +23,32 @@ export const initExpress = (port: Number) => {
     return app;
 };
 
-//Add migration
-//https://github.com/db-migrate/pg
-export const initDB = (host = "db", port = 5432) => {
-    pool = new Pool({
-        user: "postgres",
-        database: "bookit",
+export const initDB = async (host: String = "db", port: Number = 5432) => {
+    conn = await createConnection({
+        type: "postgres",
+        host: "db",
+        port: 5432,
+        username: "postgres",
         password: "example",
-        host: host,
-        port: port,
+        database: "bookit",
+        entities: [__dirname + "/entity/**/*.ts"],
+        synchronize: true,
+        logging: false,
     });
+    return conn;
+};
 
-    return pool;
+export const getRepository = <Entity>(rep: ObjectType<Entity>) => {
+    if (conn) {
+        return conn.getRepository(rep);
+    }
+    throw new Error("DB not initialized properly");
 };
 
 export function dbg<T>(x: T) {
     console.debug(x);
     return x;
 }
-
-export const query = (
-    sql: string,
-    values: any,
-    convertResult: (value: any) => void
-) =>
-    new Promise((resolve, reject) => {
-        pool.query(sql, values, (errors, results) => {
-            if (errors) {
-                reject(errors);
-            } else {
-                resolve(convertResult(results));
-            }
-        });
-    });
 
 export const to = <T>(promise: Promise<T>) => {
     return promise
