@@ -35,7 +35,6 @@ export const initDB = async (host: String = "db", port: Number = 5432) => {
         synchronize: true,
         logging: false,
     });
-    return conn;
 };
 
 export const getRepository = <Entity>(rep: ObjectType<Entity>) => {
