@@ -31,10 +31,12 @@ const handleDeleteLinks = async (req: any, res: Response) => {
     let link = await linkRepo.findOne({ shortcut: req.params.id });
     if (!link) {
         res.status(400).send("link doesn't exist");
+        return;
     }
     let isOwner = req.session.cid == link.creatorUID;
     if (!req.session.isAdmin && !isOwner) {
         res.status(403).send("Not admin or owner of this link");
+        return;
     }
     await linkRepo.delete(link);
     res.sendStatus(200);
@@ -43,6 +45,7 @@ const handleDeleteLinks = async (req: any, res: Response) => {
 const handleGetAllLinks = async (req: any, res: Response) => {
     if (!req.session.isAdmin) {
         res.status(403).send("Only admins allowed");
+        return;
     }
     let links = await linkRepo.find();
     res.status(200).send(links);
