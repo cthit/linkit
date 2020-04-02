@@ -92,7 +92,7 @@ const linkController = (app: Express) => {
     app.get("/api/links/", handleGetLinks);
     app.get("/api/links/all", handleGetAllLinks);
     app.post("/api/links/", handleAddLink);
-    app.delete("/api/links/:id", handleAddLink);
+    app.delete("/api/links/:id", handleDeleteLinks);
 };
 
 export default linkController;
