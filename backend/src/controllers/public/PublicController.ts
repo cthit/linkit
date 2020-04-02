@@ -8,7 +8,7 @@ let linkRepo: Repository<Link> = null;
 let redirectURL: string = null;
 
 const handleRedirectShortcut = async (req: any, res: Response) => {
-    let link = await linkRepo.findOne({ shortcut: req.params.id });
+    const link = await linkRepo.findOne({ shortcut: req.params.id });
 
     if (isNullOrUndefined(link)) {
         res.sendStatus(404);

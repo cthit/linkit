@@ -4,9 +4,9 @@ import { createConnection, Connection, ObjectType } from "typeorm";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 
-var conn: Connection = null;
+let conn: Connection = null;
 
-export const initExpress = (port: Number = 4000) => {
+export const initExpress = (port: number = 4000) => {
     const app = express();
     const server = createServer(app);
 
@@ -23,7 +23,7 @@ export const initExpress = (port: Number = 4000) => {
     return app;
 };
 
-export const initDB = async (host: String = "db", port: Number = 5432) => {
+export const initDB = async (host: string = "db", port: number = 5432) => {
     conn = await createConnection({
         type: "postgres",
         host: "db",
@@ -63,7 +63,7 @@ export const v4UUIDPattern = new RegExp(
 
 export const isUUID = (uuid: string) => uuid.match(v4UUIDPattern);
 
-export const addMissingHTTP = (url: String) => {
+export const addMissingHTTP = (url: string) => {
     return url.match(/^[a-zA-Z]+:\/\//) ? url : "http://" + url;
 };
 

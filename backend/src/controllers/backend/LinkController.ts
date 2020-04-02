@@ -1,6 +1,6 @@
 import { Response, Express } from "express";
 import * as jf from "joiful";
-import { getRepository, dbg, addMissingHTTP } from "../../utils";
+import { getRepository, addMissingHTTP } from "../../utils";
 import { Link } from "../../entity/Links";
 import { Repository } from "typeorm";
 
@@ -28,12 +28,12 @@ class AddLinkBody {
 }
 
 const handleDeleteLinks = async (req: any, res: Response) => {
-    let link = await linkRepo.findOne({ shortcut: req.params.id });
+    const link = await linkRepo.findOne({ shortcut: req.params.id });
     if (!link) {
         res.status(400).send("link doesn't exist");
         return;
     }
-    let isOwner = req.session.cid == link.creatorUID;
+    const isOwner = req.session.cid === link.creatorUID;
     if (!req.session.isAdmin && !isOwner) {
         res.status(403).send("Not admin or owner of this link");
         return;
@@ -47,12 +47,12 @@ const handleGetAllLinks = async (req: any, res: Response) => {
         res.status(403).send("Only admins allowed");
         return;
     }
-    let links = await linkRepo.find();
+    const links = await linkRepo.find();
     res.status(200).send(links);
 };
 
 const handleGetLinks = async (req: any, res: Response) => {
-    let links = await linkRepo.find({ creatorUID: req.session.cid });
+    const links = await linkRepo.find({ creatorUID: req.session.cid });
     res.status(200).send(
         links.map(link => ({
             shortcut: link.shortcut,
@@ -67,17 +67,17 @@ const handleAddLink = async (req: any, res: Response) => {
         res.status(400).send("Invalid body");
         return;
     }
-    let exists = await linkRepo.findOne({ shortcut: value.shortcut });
+    const exists = await linkRepo.findOne({ shortcut: value.shortcut });
 
     // If a link with that id already exists and user is not the owner
-    if (exists && exists.creatorUID != req.session.cid) {
+    if (exists && exists.creatorUID !== req.session.cid) {
         res.status(400).send(
             "Shortcut already exists and is owned by someone else"
         );
         return;
     }
 
-    let newLink = new Link();
+    const newLink = new Link();
 
     newLink.linkurl = addMissingHTTP(value.linkurl);
     newLink.shortcut = value.shortcut;
