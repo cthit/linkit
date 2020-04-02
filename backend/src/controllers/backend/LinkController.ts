@@ -1,7 +1,7 @@
 import { Response, Express } from "express";
 import * as jf from "joiful";
-import { getRepository, dbg } from "../utils";
-import { Link } from "../entity/Links";
+import { getRepository, dbg, addMissingHTTP } from "../../utils";
+import { Link } from "../../entity/Links";
 import { Repository } from "typeorm";
 
 const validShortcut = () =>
@@ -72,12 +72,7 @@ const handleAddLink = async (req: any, res: Response) => {
 
     let newLink = new Link();
 
-    // Add http to link if not present
-    const httpLink = value.linkurl.match(/^[a-zA-Z]+:\/\//)
-        ? value.linkurl
-        : "http://" + value.linkurl;
-
-    newLink.linkurl = httpLink;
+    newLink.linkurl = addMissingHTTP(value.linkurl);
     newLink.shortcut = value.shortcut;
     newLink.creatorUID = req.session.cid;
 

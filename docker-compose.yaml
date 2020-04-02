@@ -7,10 +7,12 @@ services:
         image: linkit_backend:dev
         ports:
             - 4000:4000
+            - 4001:4001
         volumes:
             - ./backend:/usr/src/app
         environment:
             ADMINS: admin
+            REDIRECT_URL: "localhost:3001"
         depends_on:
             - redis
             - gamma-backend
