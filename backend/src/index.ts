@@ -1,11 +1,11 @@
 import { initExpress, initDB } from "./utils";
 import linkController from "./controllers/backend/LinkController";
 import userController from "./controllers/backend/UserController";
-import "reflect-metadata";
 import publicController from "./controllers/public/PublicController";
 import { getSessionMiddleware } from "./middlewares/session";
 import { getAuthenticationMiddleware } from "./middlewares/authentication";
 import { getRequireBodyOnPost } from "./middlewares/require-body-on-post";
+import "reflect-metadata";
 
 const main = async () => {
     const backend = initExpress(4000);

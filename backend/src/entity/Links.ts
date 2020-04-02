@@ -3,9 +3,9 @@ import { Entity, Column, PrimaryColumn } from "typeorm";
 @Entity()
 export class Link {
     @PrimaryColumn()
-    shortcut: String;
+    shortcut: string;
     @Column()
-    linkurl: String;
+    linkurl: string;
     @Column()
-    creatorUID: String;
+    creatorUID: string;
 }
