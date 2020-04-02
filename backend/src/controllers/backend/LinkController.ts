@@ -67,9 +67,13 @@ const handleAddLink = async (req: any, res: Response) => {
         res.status(400).send("Invalid body");
         return;
     }
+    let exists = await linkRepo.findOne({ shortcut: value.shortcut });
 
-    if (dbg(await linkRepo.findOne({ shortcut: value.shortcut }))) {
-        res.status(400).send("Shortcut already exists");
+    // If a link with that id already exists and user is not the owner
+    if (exists && exists.creatorUID != req.session.cid) {
+        res.status(400).send(
+            "Shortcut already exists and is owned by someone else"
+        );
         return;
     }
 
