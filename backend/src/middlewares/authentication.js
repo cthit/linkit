@@ -32,14 +32,9 @@ const getAuthenticationMiddleware = () => {
                     //Todo set the maxAge to something that expires_in.
                     //req.session.cookie.maxAge = expires_in;
                     payload = jwt.decode(access_token);
-                    if (process.env.ADMINS) {
-                        const admins = dbg(process.env.ADMINS.split(","));
-                        req.session.isAdmin = admins.includes(
-                            payload.user_name
-                        );
-                    } else {
-                        req.session.isAdmin = false;
-                    }
+
+                    const admins = process.env.ADMINS.split(",");
+                    req.session.isAdmin = admins.includes(payload.user_name);
 
                     req.session.uid = payload.uid;
                     req.session.cid = payload.user_name;

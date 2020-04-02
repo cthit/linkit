@@ -8,7 +8,7 @@ const redisClient = new Redis("redis://redis:6379");
 
 //TODO review settings
 var sess = {
-    name: "bookit-session",
+    name: "linkit-session",
     store: new RedisStore({ client: redisClient }),
     secret: "secret",
     saveUninitialized: false,
