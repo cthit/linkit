@@ -1,4 +1,4 @@
-import { Request, Response, Express } from "express";
+import { Response, Express } from "express";
 import * as jf from "joiful";
 import { getRepository, dbg } from "../utils";
 import { Link } from "../entity/Links";
@@ -27,12 +27,38 @@ class AddLinkBody {
     linkurl: string;
 }
 
-const handleGetLink = async (req: Request, res: Response, next: Function) => {
-    // Do stuff
-    res.status(200).send({ test: "test" });
+const handleDeleteLinks = async (req: any, res: Response) => {
+    let link = await linkRepo.findOne({ shortcut: req.params.id });
+    if (!link) {
+        res.status(400).send("link doesn't exist");
+    }
+    let isOwner = req.session.cid == link.creatorUID;
+    if (!req.session.isAdmin && !isOwner) {
+        res.status(403).send("Not admin or owner of this link");
+    }
+    await linkRepo.delete(link);
+    res.sendStatus(200);
 };
 
-const handleAddLink = async (req: any, res: Response, next: Function) => {
+const handleGetAllLinks = async (req: any, res: Response) => {
+    if (!req.session.isAdmin) {
+        res.status(403).send("Only admins allowed");
+    }
+    let links = await linkRepo.find();
+    res.status(200).send(links);
+};
+
+const handleGetLinks = async (req: any, res: Response) => {
+    let links = await linkRepo.find({ creatorUID: req.session.cid });
+    res.status(200).send(
+        links.map(link => ({
+            shortcut: link.shortcut,
+            linkurl: link.linkurl,
+        }))
+    );
+};
+
+const handleAddLink = async (req: any, res: Response) => {
     const { value, error } = jf.validateAsClass(req.body, AddLinkBody);
     if (error) {
         res.status(400).send("Invalid body");
@@ -61,8 +87,10 @@ const handleAddLink = async (req: any, res: Response, next: Function) => {
 
 const linkController = (app: Express) => {
     linkRepo = getRepository(Link);
-    app.get("/api/link/:id", handleGetLink);
-    app.post("/api/link/", handleAddLink);
+    app.get("/api/links/", handleGetLinks);
+    app.get("/api/link/all", handleGetAllLinks);
+    app.post("/api/links/", handleAddLink);
+    app.delete("/api/links/:id", handleAddLink);
 };
 
 export default linkController;
