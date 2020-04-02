@@ -14,11 +14,12 @@ const handleRedirectShortcut = async (req: any, res: Response) => {
         res.sendStatus(404);
         return;
     }
-    res.redirect(301, link.linkurl.toString());
+    res.redirect(302, link.linkurl.toString());
 };
 
 const handleRedirectHome = async (req: any, res: Response) => {
-    res.redirect(301, redirectURL);
+    // 307 disables cache for browser
+    res.redirect(307, redirectURL);
 };
 
 const publicController = (app: Express) => {
