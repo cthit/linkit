@@ -90,7 +90,7 @@ const handleAddLink = async (req: any, res: Response) => {
 const linkController = (app: Express) => {
     linkRepo = getRepository(Link);
     app.get("/api/links/", handleGetLinks);
-    app.get("/api/link/all", handleGetAllLinks);
+    app.get("/api/links/all", handleGetAllLinks);
     app.post("/api/links/", handleAddLink);
     app.delete("/api/links/:id", handleAddLink);
 };
