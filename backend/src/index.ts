@@ -4,6 +4,7 @@ import userController from "./controllers/backend/UserController";
 import publicController from "./controllers/public/PublicController";
 import { getSessionMiddleware } from "./middlewares/session";
 import { getAuthenticationMiddleware } from "./middlewares/authentication";
+import { getDummyUserMiddleware } from "./middlewares/dummy-user";
 import { getRequireBodyOnPost } from "./middlewares/require-body-on-post";
 import "reflect-metadata";
 
@@ -12,7 +13,8 @@ const main = async () => {
     await initDB();
 
     backend.use(getSessionMiddleware(backend));
-    backend.use(getAuthenticationMiddleware());
+    // backend.use(getAuthenticationMiddleware());
+    backend.use(getDummyUserMiddleware());
     backend.use(getRequireBodyOnPost());
 
     linkController(backend);

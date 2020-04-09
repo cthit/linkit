@@ -5,6 +5,7 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": true,
+        "outDir": "dist",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noImplicitReturns": true,
