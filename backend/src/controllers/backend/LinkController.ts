@@ -57,6 +57,7 @@ const handleGetLinks = async (req: any, res: Response) => {
         links.map(link => ({
             shortcut: link.shortcut,
             linkurl: link.linkurl,
+            timesAccessed: link.timesAccessed,
         }))
     );
 };

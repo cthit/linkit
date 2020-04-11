@@ -14,6 +14,7 @@ const handleRedirectShortcut = async (req: any, res: Response) => {
         res.sendStatus(404);
         return;
     }
+    linkRepo.increment(link, "timesAccessed", 1);
     res.redirect(302, link.linkurl.toString());
 };
 
