@@ -44,7 +44,7 @@ const getAuthenticationMiddleware = () => {
                     res.status(200).send("session created");
                 }
             } else {
-                res.status(403).send(getGammaUri());
+                res.status(401).send(getGammaUri());
             }
         }
     };
