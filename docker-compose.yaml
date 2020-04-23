@@ -35,8 +35,6 @@ services:
             POSTGRES_DB: bookit
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: example
-        volumes:
-            - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - 5432:5432
     redis:
