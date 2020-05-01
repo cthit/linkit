@@ -7,6 +7,12 @@ import { getAuthenticationMiddleware } from "./middlewares/authentication";
 import { getDummyUserMiddleware } from "./middlewares/dummy-user";
 import { getRequireBodyOnPost } from "./middlewares/require-body-on-post";
 import "reflect-metadata";
+import * as cors from "cors";
+
+const corsOptions = {
+    origin: "http://localhost:3001",
+    credentials: true,
+};
 
 const main = async () => {
     const backend = initExpress(4000);
@@ -16,6 +22,7 @@ const main = async () => {
     backend.use(getAuthenticationMiddleware());
     // backend.use(getDummyUserMiddleware());
     backend.use(getRequireBodyOnPost());
+    backend.use(cors(corsOptions));
 
     linkController(backend);
     userController(backend);
