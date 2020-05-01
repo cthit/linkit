@@ -1,24 +1,65 @@
 import React, { useState, useEffect } from "react";
-import { DigitList } from "@cthit/react-digit-components";
-import LinkItem from "./linkitem";
+import {
+    DigitTextField,
+    DigitSelect,
+    useDigitFormField,
+    DigitForm,
+    DigitLayout,
+    DigitButton,
+} from "@cthit/react-digit-components";
+import * as yup from "yup";
 
-export const LinkList = props => {
-    const { getLinks } = props;
-    const [links, setLinks] = useState([]);
-    const onDelete = item => {
-        console.log(item);
+export const AddLink = () => {
+    const TextField = () => {
+        const fieldValues = useDigitFormField("name");
+        return (
+            <DigitTextField {...fieldValues} upperLabel="Your name" filled />
+        );
     };
 
-    useEffect(() => {
-        getLinks().then(links => setLinks(links.data));
-    }, []);
+    const SelectField = () => {
+        const fieldValues = useDigitFormField("language");
+        return (
+            <DigitSelect
+                {...fieldValues}
+                filled
+                valueToTextMap={{
+                    sv: "Swedish",
+                    en: "English",
+                }}
+                upperLabel="Language"
+            />
+        );
+    };
+
     return (
-        <DigitList
-            title={`Your Shortcuts (${links.length}):`}
-            items={links.map(link => LinkItem(link, onDelete))}
-            multipleExpanded={false}
-            alignSelf={"auto"}
-            size={true}
-        />
+        <DigitForm
+            initialValues={{
+                name: "Theodor",
+                language: "sv",
+            }}
+            onSubmit={values => {
+                console.log(values);
+            }}
+            render={() => (
+                <DigitLayout.Column
+                    size={{
+                        width: "320px",
+                    }}
+                >
+                    <TextField />
+                    <SelectField />
+                    <DigitButton
+                        raised
+                        submit
+                        onSubmit={values => console.log(values)}
+                        text="Submit"
+                    />
+                </DigitLayout.Column>
+            )}
+            validationSchema={yup.object().shape({
+                name: yup.string(),
+            })}
+        ></DigitForm>
     );
 };
