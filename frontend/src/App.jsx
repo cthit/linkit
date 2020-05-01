@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch } from "react-router-dom";
 import { Route } from "react-router";
+import Callback from "./use-cases/callback";
 
 import Home from "./use-cases/home/home";
 //import NotFound from "./use-cases/notfound";
@@ -11,10 +12,7 @@ const App = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Home} />
-            {
-                //<Route path="/callback" component={Callback} />
-                //<Route path="/" component={NotFound} />
-            }
+            <Route path="/auth/account/callback" component={Callback} />
         </Switch>
     </BrowserRouter>
 );

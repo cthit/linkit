@@ -6,6 +6,11 @@ import * as cors from "cors";
 
 let conn: Connection = null;
 
+const corsOptions = {
+    origin: "http://localhost:3001",
+    credentials: true,
+};
+
 export const initExpress = (port: number = 4000) => {
     const app = express();
     const server = createServer(app);
@@ -16,7 +21,7 @@ export const initExpress = (port: number = 4000) => {
             extended: true,
         })
     );
-    app.use(cors());
+    app.use(cors(corsOptions));
 
     server.listen(port);
 

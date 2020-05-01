@@ -1,6 +1,10 @@
 import axios from "axios";
 import _ from "lodash";
 
+const transport = axios.create({
+    withCredentials: true,
+});
+
 function removeLastSlash(path) {
     return _.trimEnd(path, "/");
 }
@@ -19,7 +23,7 @@ export function postRequest(endpoint, data) {
     //   };
     // }
 
-    return axios.post(removeLastSlash(path + endpoint), data, {
+    return transport.post(removeLastSlash(path + endpoint), data, {
         headers,
     });
 }
@@ -33,7 +37,7 @@ export function deleteRequest(endpoint, data) {
     //   };
     // }
 
-    return axios.delete(removeLastSlash(path + endpoint), {
+    return transport.delete(removeLastSlash(path + endpoint), {
         data: data,
         headers,
     });
@@ -49,7 +53,7 @@ export function getRequest(endpoint) {
     // }
 
     return new Promise((resolve, reject) => {
-        axios
+        transport
             .get(removeLastSlash(path + endpoint), {
                 headers,
             })
@@ -58,7 +62,7 @@ export function getRequest(endpoint) {
                 if (error.response != null) {
                     console.log(error.response.data);
                     console.log(error.response.status);
-                    if (error.response.status === 403) {
+                    if (error.response.status === 401) {
                         window.location.href = error.response.data;
                     }
                 } else {
