@@ -1,14 +1,43 @@
 import axios from "axios";
 import _ from "lodash";
 
-function removeLastSlash(s) {
-    return s.replace(/\/$/, "");
+function removeLastSlash(path) {
+    return _.trimEnd(path, "/");
 }
 
 const path =
     process.env.NODE_ENV === "development"
         ? "http://localhost:4000/api"
         : "https://linkit.chalmers.it/api";
+
+export function postRequest(endpoint, data) {
+    var headers = {};
+
+    // if (includeAuthorization) {
+    //   headers = {
+    //     Authorization: "Bearer " + token()
+    //   };
+    // }
+
+    return axios.post(removeLastSlash(path + endpoint), data, {
+        headers,
+    });
+}
+
+export function deleteRequest(endpoint, data) {
+    var headers = {};
+
+    // if (includeAuthorization) {
+    //   headers = {
+    //     Authorization: "Bearer " + token()
+    //   };
+    // }
+
+    return axios.delete(removeLastSlash(path + endpoint), {
+        data: data,
+        headers,
+    });
+}
 
 export function getRequest(endpoint) {
     var headers = {};
