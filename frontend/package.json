@@ -6,6 +6,7 @@
         "@cthit/react-digit-components": "^1.0.0-rc.34",
         "@date-io/core": "1.3.6",
         "@date-io/date-fns": "1.3.11",
+        "@material-ui/icons": "^4.9.1",
         "@testing-library/dom@": "7.1.3",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
