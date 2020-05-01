@@ -2,14 +2,8 @@ import * as express from "express";
 import { createServer } from "http";
 import { createConnection, Connection, ObjectType } from "typeorm";
 import * as bodyParser from "body-parser";
-import * as cors from "cors";
 
 let conn: Connection = null;
-
-const corsOptions = {
-    origin: "http://localhost:3001",
-    credentials: true,
-};
 
 export const initExpress = (port: number = 4000) => {
     const app = express();
@@ -21,7 +15,6 @@ export const initExpress = (port: number = 4000) => {
             extended: true,
         })
     );
-    app.use(cors(corsOptions));
 
     server.listen(port);
 
