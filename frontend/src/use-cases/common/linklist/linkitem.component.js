@@ -8,7 +8,7 @@ const LinkItem = (link, onDelete) => {
         text: link.shortcut,
         secondaryText: link.linkurl,
         actionIcon: DeleteIcon,
-        actionOnClick: onDelete,
+        actionOnClick: item => onDelete(item.id),
     };
 };
 
