@@ -13,8 +13,8 @@ const main = async () => {
     await initDB();
 
     backend.use(getSessionMiddleware(backend));
-    // backend.use(getAuthenticationMiddleware());
-    backend.use(getDummyUserMiddleware());
+    backend.use(getAuthenticationMiddleware());
+    // backend.use(getDummyUserMiddleware());
     backend.use(getRequireBodyOnPost());
 
     linkController(backend);

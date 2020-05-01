@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import * as serviceWorker from "./serviceWorker";
 import { DigitProviders, DigitDialog } from "@cthit/react-digit-components";
 import { Route } from "react-router";
-import LinkITHeaderView from "./common/linkitheader.view";
+import LinkITHeaderView from "./common/header/";
 import "./index.css";
 
 ReactDOM.render(
