@@ -6,6 +6,9 @@ import LinkItem from "./linkitem";
 
 const Home = () => {
     const [links, setLinks] = useState([]);
+    const onDelete = item => {
+        console.log(item);
+    };
 
     useEffect(() => {
         getMyLinks().then(links => setLinks(links.data));
@@ -13,7 +16,7 @@ const Home = () => {
     return (
         <DigitList
             title={`Your Shortcuts (${links.length})`}
-            items={links.map(link => LinkItem(link))}
+            items={links.map(link => LinkItem(link, onDelete))}
             multipleExpanded={false}
             alignSelf={"auto"}
             size={true}
