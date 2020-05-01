@@ -12,17 +12,22 @@ import * as cors from "cors";
 const corsOptions = {
     origin: "http://localhost:3001",
     credentials: true,
+    methods: ["GET", "POST", "DELETE", "OPTIONS"],
 };
 
 const main = async () => {
     const backend = initExpress(4000);
     await initDB();
 
+    // enabled cors
+    backend.use(cors(corsOptions));
+    // preflight cors
+    backend.options("*", cors(corsOptions)); // include before other routes
+
     backend.use(getSessionMiddleware(backend));
     backend.use(getAuthenticationMiddleware());
     // backend.use(getDummyUserMiddleware());
     backend.use(getRequireBodyOnPost());
-    backend.use(cors(corsOptions));
 
     linkController(backend);
     userController(backend);
