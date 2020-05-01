@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
     DigitTextField,
-    DigitSelect,
     useDigitFormField,
     DigitForm,
     DigitLayout,
@@ -12,13 +11,15 @@ import * as yup from "yup";
 export const AddLink = props => {
     const ShortcutField = () => {
         const fieldValues = useDigitFormField("shortcut");
-        return <DigitTextField {...fieldValues} upperLabel="smrf.it/" filled />;
+        return (
+            <DigitTextField {...fieldValues} upperLabel="smrf.it/" outlined />
+        );
     };
 
     const LinkURLField = () => {
         const fieldValues = useDigitFormField("linkurl");
         return (
-            <DigitTextField {...fieldValues} upperLabel="Linked URL" filled />
+            <DigitTextField {...fieldValues} upperLabel="Linked URL" outlined />
         );
     };
 
@@ -30,24 +31,22 @@ export const AddLink = props => {
             }}
             onSubmit={props.addLink}
             render={() => (
-                <DigitLayout.Column
-                    size={{
-                        width: "320px",
-                    }}
-                >
+                <DigitLayout.Column>
                     <ShortcutField />
                     <LinkURLField />
                     <DigitButton
                         raised
                         submit
-                        onSubmit={values => console.log(values)}
+                        primary
                         text="Make Link"
+                        size={{ width: "200px" }}
+                        alignSelf="flex-end"
                     />
                 </DigitLayout.Column>
             )}
             validationSchema={yup.object().shape({
                 name: yup.string(),
             })}
-        ></DigitForm>
+        />
     );
 };
