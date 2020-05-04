@@ -8,6 +8,10 @@ export const getMyLinks = () => {
     return getRequest("/links/");
 };
 
+export const getAllLinks = () => {
+    return getRequest("/links/all");
+};
+
 export const postLink = link => {
     return postRequest("/links/", link);
 };
