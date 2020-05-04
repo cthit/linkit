@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@cthit/react-digit-components": "^1.0.0-rc.34",
+        "@cthit/react-digit-components": "^1.0.1-rc.20",
         "@date-io/core": "1.3.6",
         "@date-io/date-fns": "1.3.11",
         "@material-ui/icons": "^4.9.1",
@@ -13,12 +13,12 @@
         "@testing-library/user-event": "^7.1.2",
         "axios": "^0.19.2",
         "express": "^4.17.1",
-        "react": "16.13.0",
-        "react-dom": "16.13.0",
+        "react": "16.13.1",
+        "react-dom": "16.13.1",
         "react-router": "5.1.2",
         "react-router-dom": "5.1.2",
         "react-scripts": "3.4.0",
-        "styled-components": "5.0.1",
+        "styled-components": "5.1.0",
         "yup": "^0.28.5"
     },
     "scripts": {
