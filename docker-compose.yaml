@@ -59,10 +59,16 @@ services:
             IS_MOCKING_CLIENT: "true"
             ADMIN_PASSWORD: password
             ROOT_DEBUG_LEVEL: info
+            REDIS_PASSWORD: ""
+            REDIS_HOST: "redis"
+            COOKIE_DOMAIN: "localhost"
+
         ports:
             - 8081:8081
+            - 9090:9090
         depends_on:
             - gamma-db
+            - redis
     gamma-frontend:
         image: cthit/gamma-frontend:development
         ports:

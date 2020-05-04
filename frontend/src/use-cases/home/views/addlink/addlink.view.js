@@ -12,14 +12,29 @@ export const AddLink = props => {
     const ShortcutField = () => {
         const fieldValues = useDigitFormField("shortcut");
         return (
-            <DigitTextField {...fieldValues} upperLabel="smrf.it/" outlined />
+            <DigitTextField
+                {...fieldValues}
+                upperLabel="smrf.it/"
+                outlined
+                maxLength={20}
+                size={{
+                    maxWidth: -1,
+                }}
+            />
         );
     };
 
     const LinkURLField = () => {
         const fieldValues = useDigitFormField("linkurl");
         return (
-            <DigitTextField {...fieldValues} upperLabel="Linked URL" outlined />
+            <DigitTextField
+                {...fieldValues}
+                upperLabel="Linked URL"
+                outlined
+                size={{
+                    maxWidth: -1,
+                }}
+            />
         );
     };
 
