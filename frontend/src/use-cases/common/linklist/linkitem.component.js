@@ -5,7 +5,7 @@ const LinkItem = (link, onDelete) => {
     return {
         id: link.shortcut,
         icon: LinkIcon,
-        text: link.shortcut,
+        text: link.shortcut + (link.creatorUID ? " ❘ " + link.creatorUID : ""),
         secondaryText: link.linkurl,
         actionIcon: DeleteIcon,
         actionOnClick: item => onDelete(item.id),

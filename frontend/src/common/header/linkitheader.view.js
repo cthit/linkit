@@ -8,17 +8,28 @@ import { getUser } from "../../services/data.service";
 const LinkITHeader = ({ renderMain }) => {
     const [user, setUser] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
+    const [avatarUrl, setAvatarUrl] = useState(null);
     useEffect(() => {
         getUser().then(user => {
             setUser(user.data.nick);
             setIsAdmin(user.data.isAdmin);
+            setAvatarUrl(user.data.avatarUrl);
         });
     }, []);
     return (
         <DigitHeader
             renderMain={renderMain}
             title="LinkIT"
-            renderHeader={() => "Logged in as: " + user}
+            headerRowProps={{
+                flex: "1",
+                justifyContent: "space-between",
+            }}
+            renderHeader={() => (
+                <DigitGammaActionsDummy
+                    nick={user}
+                    avatarUrl={avatarUrl}
+                ></DigitGammaActionsDummy>
+            )}
         />
     );
 };
