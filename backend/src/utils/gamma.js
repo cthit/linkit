@@ -6,6 +6,7 @@ const gammaSettings = {
     tokenUri: "http://gamma-backend:8081/api/oauth/token",
     authorizationUri: "http://localhost:8081/api/oauth/authorize",
     redirectUri: "http://localhost:3001/auth/account/callback",
+    meUri: "http://gamma-backend:8081/api/users/me",
 };
 
 const getGammaUri = () => {
@@ -22,6 +23,14 @@ const getGammaUri = () => {
         redirectUri
     );
 };
+
+async function getMe(token) {
+    return axios.get(gammaSettings.meUri, {
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+}
 
 async function postGammaToken(code) {
     const params = new URLSearchParams();
@@ -45,4 +54,5 @@ async function postGammaToken(code) {
 module.exports = {
     getGammaUri,
     postGammaToken,
+    getMe,
 };

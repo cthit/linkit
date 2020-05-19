@@ -18,7 +18,7 @@ export const AddLink = props => {
                 outlined
                 maxLength={20}
                 size={{
-                    maxWidth: -1,
+                    maxWidth: "-1",
                 }}
             />
         );
@@ -32,7 +32,7 @@ export const AddLink = props => {
                 upperLabel="Linked URL"
                 outlined
                 size={{
-                    maxWidth: -1,
+                    maxWidth: "-1",
                 }}
             />
         );
