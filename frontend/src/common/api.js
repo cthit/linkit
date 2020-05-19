@@ -43,32 +43,9 @@ export function deleteRequest(endpoint, data) {
     });
 }
 
-export function getRequest(endpoint) {
+export const getRequest = endpoint => {
     var headers = {};
-
-    // if (includeAuthorization) {
-    //   headers = {
-    //     Authorization: "Bearer " + token()
-    //   };
-    // }
-
-    return new Promise((resolve, reject) => {
-        transport
-            .get(removeLastSlash(path + endpoint), {
-                headers,
-            })
-            .then(response => resolve(response))
-            .catch(error => {
-                if (error.response != null) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    if (error.response.status === 401) {
-                        window.location.href = error.response.data;
-                    }
-                } else {
-                    console.log(error);
-                }
-                reject(error);
-            });
+    return transport.get(removeLastSlash(path + endpoint), {
+        headers,
     });
-}
+};

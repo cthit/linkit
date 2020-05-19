@@ -5,20 +5,10 @@ import App from "./App.jsx";
 import * as serviceWorker from "./serviceWorker";
 import { DigitProviders, DigitDialog } from "@cthit/react-digit-components";
 import { Route } from "react-router";
-import LinkITHeaderView from "./common/header/";
 import "./index.css";
 
 ReactDOM.render(
-    <DigitProviders
-        children={
-            <div className="main">
-                <DigitDialog />
-                <LinkITHeaderView
-                    renderMain={() => <Route component={App} />}
-                />
-            </div>
-        }
-    />,
+    <DigitProviders children={<App />} />,
     document.getElementById("root")
 );
 

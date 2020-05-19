@@ -1,30 +1,53 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch } from "react-router-dom";
 import { Route } from "react-router";
-import Callback from "./use-cases/callback";
 import Admin from "./use-cases/admin";
 import Home from "./use-cases/home/home";
 import NotFound from "./use-cases/notfound";
-import { getUser } from "./services/data.service";
+import NotAllowed from "./use-cases/notallowed";
 import "./App.css";
+import {
+    useGamma,
+    useGammaMe,
+    DigitHeader,
+} from "@cthit/react-digit-components";
+import LinkITHeaderView from "./common/header/";
 
 const App = () => {
-    // Terrible terrible why oh why
     const [isAdmin, setIsAdmin] = useState(false);
+    console.log(useGamma("/api/me", "/api/auth"));
+    const me = useGammaMe();
+    console.log(me);
+
     useEffect(() => {
-        getUser().then(user => {
-            setIsAdmin(user.data.isAdmin);
-        });
+        if (me) {
+            setIsAdmin(!!me.isAdmin);
+        }
     }, []);
+
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/auth/account/callback" component={Callback} />
-                <Route path="/admin" component={isAdmin ? Admin : NotFound} />
-                <Route path="/" component={NotFound} />
-            </Switch>
-        </BrowserRouter>
+        <DigitHeader
+            title="LinkIT"
+            headerRowProps={{
+                flex: "1",
+                justifyContent: "space-between",
+            }}
+            renderHeader={() => {
+                return <LinkITHeaderView />;
+            }}
+            renderMain={() => (
+                <>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route
+                            path="/admin"
+                            component={isAdmin ? Admin : NotAllowed}
+                        />
+                        <Route path="/" component={NotFound} />
+                    </Switch>
+                </>
+            )}
+        />
     );
 };
 
