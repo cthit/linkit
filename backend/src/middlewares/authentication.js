@@ -39,6 +39,7 @@ const getAuthenticationMiddleware = () => {
 
                     const admins = process.env.ADMINS.split(",");
                     req.session.isAdmin = admins.includes(payload.user_name);
+                    req.session.cid = payload.user_name;
 
                     req.session.save(err => console.log(err));
                     res.status(200).send("session created");
