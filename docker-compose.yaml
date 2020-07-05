@@ -36,6 +36,12 @@ services:
             - ./frontend/public:/usr/src/app/public
         depends_on:
             - backend
+    adminer:
+        image: adminer
+        ports:
+            - 8085:8080
+        networks:
+            - mat
     db:
         image: postgres:12
         restart: always
