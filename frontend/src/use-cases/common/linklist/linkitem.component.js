@@ -3,6 +3,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const LinkItem = (link, onDelete) => {
     return {
+        link: link,
         id: link.shortcut,
         icon: LinkIcon,
         text: link.shortcut + (link.creatorUID ? " ❘ " + link.creatorUID : ""),
