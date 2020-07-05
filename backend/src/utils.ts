@@ -62,7 +62,7 @@ export const v4UUIDPattern = new RegExp(
 export const isUUID = (uuid: string) => uuid.match(v4UUIDPattern);
 
 export const addMissingHTTP = (url: string) => {
-    return url.match(/^[a-zA-Z]+:\/\//) ? url : "http://" + url;
+    return url.match(/^[a-zA-Z]+:\/\//) ? url : "https://" + url;
 };
 
 export const renameProp = (
