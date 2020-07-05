@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { Switch } from "react-router-dom";
 import { Route } from "react-router";
 import Admin from "./use-cases/admin";
 import Home from "./use-cases/home/home";
@@ -15,9 +15,9 @@ import LinkITHeaderView from "./common/header/";
 
 const App = () => {
     const [isAdmin, setIsAdmin] = useState(false);
-    console.log(useGamma("/api/me", "/api/auth"));
+    useGamma("/api/me", "/api/auth");
+
     const me = useGammaMe();
-    console.log(me);
 
     useEffect(() => {
         if (me) {
