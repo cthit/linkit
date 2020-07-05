@@ -8,8 +8,4 @@ export class Link {
     linkurl: string;
     @Column()
     creatorUID: string;
-    @Column({
-        default: 0,
-    })
-    timesAccessed: number;
 }
