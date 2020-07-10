@@ -8,31 +8,70 @@ import { Session } from "../../entity/Session";
 let linkRepo: Repository<Link>;
 let sessionRepo: Repository<Session>;
 
-const handleRedirectShortcut = async (req: any, res: Response) => {
-    const link = await linkRepo.findOne({ shortcut: req.params.id });
+const handleGetYear = async (req: any, res: Response) => {
+    const re = await sessionRepo.query(
+        `SELECT series AS month, COALESCE(clicks, 0) AS clicks
+        FROM generate_series((date_trunc('month', current_date) - INTERVAL '12 months')::date, current_date, '1 month'::interval) AS series
+        LEFT JOIN
+        (SELECT COUNT(id) as clicks, date_trunc('month', timestamp) as month
+        FROM session
+        WHERE timestamp > (current_date - INTERVAL '12 months')
+        GROUP BY date_trunc('month', timestamp)) AS stats
+        ON stats.month = series
+        ORDER BY month`
+    );
 
-    if (isNullOrUndefined(link)) {
-        res.sendStatus(404);
-        return;
-    }
-    res.redirect(302, link.linkurl.toString());
-
-    const session = new Session();
-
-    session.ip = req.ip;
-    session.link = link;
-    // Default to Sweden if cloudflare doesn't work
-    session.country = req.header("cf-country")
-        ? req.header("cf-country")
-        : "SE";
-
-    sessionRepo.save(session);
+    res.status(200).send(re);
 };
 
-const publicController = (app: Express) => {
+const handleGetMonth = async (req: any, res: Response) => {
+    const re = await sessionRepo.query(
+        `SELECT series AS date, COALESCE(clicks, 0) AS clicks
+        FROM generate_series((date_trunc('day', current_date) - INTERVAL '1 months')::date, current_date, '1 day'::interval) AS series
+        LEFT JOIN
+        (SELECT COUNT(id) as clicks, date_trunc('day', timestamp) as date
+        FROM session
+        WHERE date_trunc('month', timestamp) = date_trunc('month', current_date)
+        GROUP BY date_trunc('day', timestamp)) AS stats
+        ON stats.date = series
+        ORDER BY date`
+    );
+
+    res.status(200).send(re);
+};
+
+const handleGetAverageHour = async (req: any, res: Response) => {
+    const re = await sessionRepo.query(
+        `SELECT series AS hour, COALESCE(clicks, 0) AS clicks
+        FROM generate_series(1, 24, 1) AS series
+        LEFT JOIN
+        (SELECT COUNT(id) as clicks, date_part('hour', timestamp) as hour
+        FROM session
+        GROUP BY date_part('hour', timestamp)) AS stats
+        ON stats.hour = series
+        ORDER BY hour`
+    );
+
+    res.status(200).send(re);
+};
+
+const handleGetCountries = async (req: any, res: Response) => {
+    const re = await sessionRepo.query(
+        `SELECT COUNT(id) as clicks, country
+        FROM session
+        GROUP BY country`
+    );
+
+    res.status(200).send(re);
+};
+
+const sessionController = (app: Express) => {
     linkRepo = getRepository(Link);
     sessionRepo = getRepository(Session);
-    app.get("/:id", handleRedirectShortcut);
+    app.get("/api/links/:id/sessions/year", handleGetYear);
+    app.get("/api/links/:id/sessions/month", handleGetMonth);
+    app.get("/api/links/:id/sessions/averageHour", handleGetAverageHour);
+    app.get("/api/links/:id/sessions/countries", handleGetCountries);
 };
 
-export default publicController;
+export default sessionController;
