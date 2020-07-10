@@ -5,7 +5,7 @@ import Stats from "../stats";
 
 export const LinkList = props => {
     const { links, onDelete } = props;
-    const [openDialog] = useDigitCustomDialog();
+    const [openDialog] = useDigitCustomDialog({ size: { idth: "2000px" } });
     return (
         <DigitList
             title={`Your Shortcuts (${links.length}):`}
