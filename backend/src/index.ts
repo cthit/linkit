@@ -8,6 +8,7 @@ import { getDummyUserMiddleware } from "./middlewares/dummy-user";
 import { getRequireBodyOnPost } from "./middlewares/require-body-on-post";
 import "reflect-metadata";
 import * as cors from "cors";
+import sessionController from "./controllers/backend/SessionController";
 
 const corsOptions = {
     origin: "http://localhost:3001",
@@ -31,6 +32,7 @@ const main = async () => {
 
     linkController(backend);
     userController(backend);
+    sessionController(backend);
 
     const publicApp = initExpress(4001);
     publicController(publicApp);
