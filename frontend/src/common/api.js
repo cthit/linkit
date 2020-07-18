@@ -12,7 +12,7 @@ function removeLastSlash(path) {
 const path =
     process.env.NODE_ENV === "development"
         ? "http://localhost:4000/api"
-        : "https://linkit.chalmers.it/api";
+        : "/api";
 
 export function postRequest(endpoint, data) {
     var headers = {};
