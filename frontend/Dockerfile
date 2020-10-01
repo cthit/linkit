@@ -1,13 +1,14 @@
 # build environment
-FROM node:12.18.2 as build
+FROM node:14 as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-ENV REACT_APP_BACKEND_URL "/api"
-COPY package.json /app/package.json
-RUN npm install
-RUN npm install react-scripts@3.0.1 -g
+ENV NODE_ENV "production"
+COPY package.json .
+COPY yarn.lock .
+RUN yarn
+RUN yarn global add react-scripts@3.0.1
 COPY . /app
-RUN npm run build
+RUN yarn run build
 
 # production environment
 FROM nginx:1.16.0-alpine

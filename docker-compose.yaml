@@ -6,8 +6,8 @@ services:
     backend:
         build:
             context: ./backend
-            dockerfile: dev.Dockerfile
-        image: linkit_backend:dev
+            dockerfile: Dockerfile
+        image: linkit_backend:prod
         ports:
             - 4000:4000
             - 4001:4001
@@ -16,6 +16,12 @@ services:
         environment:
             ADMINS: admin
             REDIRECT_URL: "localhost:3001"
+            GAMMA_TOKEN: "http://gamma-backend:8081/api/oauth/token"
+            GAMMA_AUTH: "http://localhost:8081/api/oauth/authorize"
+            GAMMA_REDIRECT: "http://localhost:3001/auth/account/callback"
+            GAMMA_ME: "http://gamma-backend:8081/api/users/me"
+            GAMMA_CLIENT_ID: "id"
+            GAMMA_CLIENT_SECRET: "secret"
         networks:
             - mat
             - gamma
@@ -48,7 +54,7 @@ services:
         networks:
             - mat
         environment:
-            POSTGRES_DB: bookit
+            POSTGRES_DB: linkit
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: example
         ports:

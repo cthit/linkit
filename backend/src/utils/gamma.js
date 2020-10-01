@@ -1,12 +1,12 @@
 const axios = require("axios");
 
 const gammaSettings = {
-    clientId: "id",
-    clientSecret: "secret",
-    tokenUri: "http://gamma-backend:8081/api/oauth/token",
-    authorizationUri: "http://localhost:8081/api/oauth/authorize",
-    redirectUri: "http://localhost:3001/auth/account/callback",
-    meUri: "http://gamma-backend:8081/api/users/me",
+    clientId: process.env.GAMMA_CLIENT_ID,
+    clientSecret: process.env.GAMMA_CLIENT_SECRET,
+    tokenUri: process.env.GAMMA_TOKEN,
+    authorizationUri: process.env.GAMMA_AUTH,
+    redirectUri: process.env.GAMMA_REDIRECT,
+    meUri: process.env.GAMMA_ME,
 };
 
 const getGammaUri = () => {

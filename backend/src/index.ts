@@ -11,7 +11,7 @@ import * as cors from "cors";
 import sessionController from "./controllers/backend/SessionController";
 
 const corsOptions = {
-    origin: "http://localhost:3001",
+    origin: process.env.NODE_ENV !== "production" ? "*" : "",
     credentials: true,
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
 };
@@ -34,8 +34,8 @@ const main = async () => {
     userController(backend);
     sessionController(backend);
 
-    const publicApp = initExpress(4001);
-    publicController(publicApp);
+    //const publicApp = initExpress(4001);
+    //publicController(publicApp);
 };
 
 main();

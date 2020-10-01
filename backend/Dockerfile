@@ -1,4 +1,4 @@
-FROM node:14.5.0
+FROM node:14
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -9,10 +9,12 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm install --only=production
+RUN npm i --only=production
 
 COPY . .
 
-EXPOSE 8080
+RUN npm run tsc
+
+EXPOSE 4000
 EXPOSE 4001
 CMD [ "npm", "start" ]

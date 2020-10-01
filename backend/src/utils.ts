@@ -28,7 +28,7 @@ export const initDB = async (host: string = "db", port: number = 5432) => {
         port: 5432,
         username: "postgres",
         password: "example",
-        database: "bookit",
+        database: "linkit",
         entities: [__dirname + "/entity/**/*.ts"],
         synchronize: true,
         logging: false,
