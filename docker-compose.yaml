@@ -3,25 +3,25 @@ networks:
     gamma:
     mat:
 services:
-    backend:
-        build:
-            context: ./backend
-            dockerfile: dev.Dockerfile
-        image: linkit_backend:dev
-        ports:
-            - 4000:4000
-            - 4001:4001
-        volumes:
-            - ./backend:/usr/src/app
-        environment:
-            ADMINS: admin
-            REDIRECT_URL: "localhost:3001"
-        networks:
-            - mat
-            - gamma
-        depends_on:
-            - redis
-            - gamma-backend
+    # backend:
+    #     build:
+    #         context: ./backend
+    #         dockerfile: dev.Dockerfile
+    #     image: linkit_backend:dev
+    #     ports:
+    #         - 4000:4000
+    #         - 4001:4001
+    #     volumes:
+    #         - ./backend:/usr/src/app
+    #     environment:
+    #         ADMINS: admin
+    #         REDIRECT_URL: "localhost:3001"
+    #     networks:
+    #         - mat
+    #         - gamma
+    #     depends_on:
+    #         - redis
+    #         - gamma-backend
     frontend:
         build:
             context: ./frontend
@@ -34,8 +34,6 @@ services:
         volumes:
             - ./frontend/src:/usr/src/app/src
             - ./frontend/public:/usr/src/app/public
-        depends_on:
-            - backend
     adminer:
         image: adminer
         ports:
