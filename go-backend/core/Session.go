@@ -1,15 +1,16 @@
 package core
 
 import (
-	"net"
 	"time"
+
+	"gorm.io/gorm"
 )
 
-type Session = struct {
-	Id        int64
-	tableName struct{} `pg:"Sessions"`
-	Link      *Link    `pg:"rel:has-one"`
-	IP        net.IP
+type Session struct {
+	gorm.Model
+	LinkRef   int64
+	Link      *Link `gorm:"foreignKey:LinkRef"`
+	IP        string
 	Timestamp time.Time
 	Country   string
 }
