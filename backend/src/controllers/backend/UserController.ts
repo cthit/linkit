@@ -1,5 +1,5 @@
 import { Request, Response, Express } from "express";
-import { getMe } from "../../utils/gamma";
+import { getMe } from "../../utils/gamma.js";
 
 const handleGetMe = async (req: any, res: Response) => {
     const me = (await getMe(req.session.token)).data;

@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 const gammaSettings = {
     clientId: process.env.GAMMA_CLIENT_ID,
@@ -9,7 +9,7 @@ const gammaSettings = {
     meUri: process.env.GAMMA_ME,
 };
 
-const getGammaUri = () => {
+export const getGammaUri = () => {
     const responseType = "response_type=code";
     const clientId = "client_id=" + gammaSettings.clientId;
     const redirectUri = "redirect_uri=" + gammaSettings.redirectUri;
@@ -24,7 +24,7 @@ const getGammaUri = () => {
     );
 };
 
-async function getMe(token) {
+export async function getMe(token: any) {
     return axios.get(gammaSettings.meUri, {
         headers: {
             Authorization: "Bearer " + token,
@@ -32,7 +32,7 @@ async function getMe(token) {
     });
 }
 
-async function postGammaToken(code) {
+export async function postGammaToken(code: any) {
     const params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("client_id", gammaSettings.clientId);
@@ -50,9 +50,3 @@ async function postGammaToken(code) {
         },
     });
 }
-
-module.exports = {
-    getGammaUri,
-    postGammaToken,
-    getMe,
-};

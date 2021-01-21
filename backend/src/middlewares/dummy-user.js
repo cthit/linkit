@@ -1,4 +1,4 @@
-const getDummyUserMiddleware = () => (req, res, next) => {
+export const getDummyUserMiddleware = () => (req, res, next) => {
     req.session.uid = "1";
     req.session.cid = "admin";
     req.session.nick = "Admin";
@@ -6,8 +6,4 @@ const getDummyUserMiddleware = () => (req, res, next) => {
     req.session.save(err => console.log(err));
 
     next();
-};
-
-module.exports = {
-    getDummyUserMiddleware,
 };

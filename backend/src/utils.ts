@@ -1,7 +1,8 @@
-import * as express from "express";
+import express from "express";
 import { createServer } from "http";
 import { createConnection, Connection, ObjectType } from "typeorm";
-import * as bodyParser from "body-parser";
+import bodyParser from "body-parser";
+import * as path from "path";
 
 let conn: Connection = null;
 
@@ -22,6 +23,7 @@ export const initExpress = (port: number = 4000) => {
 };
 
 export const initDB = async (host: string = "db", port: number = 5432) => {
+    const __dirname = path.resolve();
     conn = await createConnection({
         type: "postgres",
         host: "db",

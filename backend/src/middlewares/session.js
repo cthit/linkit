@@ -1,7 +1,7 @@
-const Redis = require("ioredis");
-const session = require("express-session");
-
-let RedisStore = require("connect-redis")(session);
+import Redis from "ioredis";
+import connectRedis from "connect-redis";
+import session from "express-session";
+const RedisStore = connectRedis(session);
 
 //Do I need to fix a password?
 const redisClient = new Redis("redis://redis:6379");
@@ -21,7 +21,7 @@ var sess = {
     },
 };
 
-const getSessionMiddleware = app => {
+export const getSessionMiddleware = app => {
     app.set("trust proxy", 1);
     if (app.get("env") === "production") {
         app.set("trust proxy", 1);
@@ -30,8 +30,4 @@ const getSessionMiddleware = app => {
     }
 
     return session(sess);
-};
-
-module.exports = {
-    getSessionMiddleware,
 };

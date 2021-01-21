@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
-const { to, dbg } = require("../utils");
-const { getGammaUri, postGammaToken, getMe } = require("../utils/gamma");
+import jwt from "jsonwebtoken";
+import { to, dbg } from "../utils";
+import { getGammaUri, postGammaToken, getMe } from "../utils/gamma";
 
-const getAuthenticationMiddleware = () => {
+export const getAuthenticationMiddleware = () => {
     return async (req, res, next) => {
         //user signed in, continue...
         if (req.session.token) {
@@ -49,8 +49,4 @@ const getAuthenticationMiddleware = () => {
             }
         }
     };
-};
-
-module.exports = {
-    getAuthenticationMiddleware,
 };
