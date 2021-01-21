@@ -1,39 +1,27 @@
 package postgres
 
 import (
-	"github.com/go-pg/pg/v10"
-	"github.com/go-pg/pg/v10/orm"
 	"github.com/swexbe/linkit/backend/core"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func Init() {
-	db := pg.Connect(&pg.Options{
-		Addr:     "0.0.0.0:5432",
-		User:     "postgres",
-		Password: "example",
-		Database: "bookit",
-	})
-	defer db.Close()
-
-	err := createSchema(db)
-	if err != nil {
-		panic(err)
-	}
-
+type Product struct {
+	gorm.Model
+	Code  string
+	Price uint
 }
 
-// createSchema creates database schema for User and Story models.
-func createSchema(db *pg.DB) error {
-	models := []interface{}{&core.Link{}, &core.Session{}}
-
-	for _, model := range models {
-		err := db.Model(model).CreateTable(&orm.CreateTableOptions{
-			Temp:        false,
-			IfNotExists: true,
-		})
-		if err != nil {
-			return err
-		}
+func Init() *gorm.DB {
+	dsn := "host=0.0.0.0 user=postgres password=example dbname=bookit port=5432 sslmode=disable TimeZone=Europe/Stockholm"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
 	}
-	return nil
+
+	// Migrate the schema
+	db.AutoMigrate(core.Link{})
+	db.AutoMigrate(core.Session{})
+
+	return db
 }
