@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
+	"github.com/swexbe/linkit/backend/controllers"
 	"github.com/swexbe/linkit/backend/core"
 	"github.com/swexbe/linkit/backend/middlewares"
 	"github.com/swexbe/linkit/backend/postgres"
@@ -43,11 +44,15 @@ func panicIfErr(err error) {
 func main() {
 
 	r := gin.Default()
+	// Init session middleware
 	store, err := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
 	panicIfErr(err)
 	r.Use(sessions.Sessions("LinkITSession", store))
 	r.Use(middlewares.GammaAuth())
 
+	userGroup := r.Group("/user")
+
+	controllers.RouteUserController(userGroup)
 	r.GET("/hello", func(c *gin.Context) {
 		c.String(200, "hello")
 	})

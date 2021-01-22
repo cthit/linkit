@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/sessions"
@@ -26,6 +28,16 @@ func genericError(err error, c *gin.Context) {
 	c.Abort()
 }
 
+func contains(slice []string, item string) bool {
+	set := make(map[string]struct{}, len(slice))
+	for _, s := range slice {
+		set[s] = struct{}{}
+	}
+
+	_, ok := set[item]
+	return ok
+}
+
 // GammaAuth is a gin middleware which handles authentication with gamma
 func GammaAuth() gin.HandlerFunc {
 	// Hard coded for now
@@ -34,7 +46,6 @@ func GammaAuth() gin.HandlerFunc {
 	const tokenURI = "http://localhost:8081/api/oauth/token"
 	const authorizationURI = "http://localhost:8081/api/oauth/authorize"
 	const redirectURI = "http://localhost:3001/auth/account/callback"
-	const meURI = "http://localhost:8081/api/users/me"
 	gammaURI := fmt.Sprintf("%s?response_type=code&client_id=%s&redirect_uri=%s", authorizationURI, clientID, redirectURI)
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
@@ -82,16 +93,25 @@ func GammaAuth() gin.HandlerFunc {
 
 				// Get username
 				userName := token.Claims.(jwt.MapClaims)["user_name"]
+				strUserName := fmt.Sprintf("%v", userName)
 
-				fmt.Println(userName)
+				// User is in list of admins?
+				admins := os.Getenv("admins")
+				adminsSlice := strings.Split(admins, ",")
+				isAdmin := contains(adminsSlice, strUserName)
+
+				fmt.Println(strUserName)
 				session.Set("token", resp.AccessToken)
-				session.Set("cid", userName)
+				session.Set("cid", strUserName)
+				session.Set("isAdmin", isAdmin)
 				session.Save()
-				c.Next()
+				session.Options(sessions.Options{MaxAge: int(resp.ExpiresIn)})
+				c.String(200, "Session created")
+				c.Abort()
 
 			} else {
 				fmt.Println(res.StatusCode)
-				c.String(501, "incorrect token")
+				c.String(500, "incorrect token")
 				c.Abort()
 			}
 
