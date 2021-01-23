@@ -93,10 +93,10 @@ func GammaAuth() gin.HandlerFunc {
 
 				// Get username
 				userName := token.Claims.(jwt.MapClaims)["user_name"]
-				strUserName := fmt.Sprintf("%v", userName)
+				strUserName := userName.(string)
 
 				// User is in list of admins?
-				admins := os.Getenv("admins")
+				admins := os.Getenv("ADMINS")
 				adminsSlice := strings.Split(admins, ",")
 				isAdmin := contains(adminsSlice, strUserName)
 
