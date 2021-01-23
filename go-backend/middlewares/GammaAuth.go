@@ -13,6 +13,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var clientID = os.Getenv("GAMMA_CLIENT_ID")
+var clientSecret = os.Getenv("GAMMA_CLIENT_SECRET")
+var tokenURI = os.Getenv("GAMMA_TOKEN")
+var authorizationURI = os.Getenv("GAMMA_AUTH")
+var redirectURI = os.Getenv("GAMMA_REDIRECT")
+
 type code struct {
 	Code string `json:"code" binding:"required"`
 }
@@ -40,12 +46,6 @@ func contains(slice []string, item string) bool {
 
 // GammaAuth is a gin middleware which handles authentication with gamma
 func GammaAuth() gin.HandlerFunc {
-	// Hard coded for now
-	const clientID = "M44komMNcASSzSxNdmoQNJHn4nRjuM7Vt7ecXcKBpZLh6nTFa5VheZwRv8zusJBCFo5sieQWV3c"
-	const clientSecret = "XUKfefVDe4eJBY18WYwrAO5a31cqsqLZOB6SQnSQlDvKNkTI6g2hpczaSpMwLz8qDV4nfdYMDF6"
-	const tokenURI = "http://localhost:8081/api/oauth/token"
-	const authorizationURI = "http://localhost:8081/api/oauth/authorize"
-	const redirectURI = "http://localhost:3001/auth/account/callback"
 	gammaURI := fmt.Sprintf("%s?response_type=code&client_id=%s&redirect_uri=%s", authorizationURI, clientID, redirectURI)
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
