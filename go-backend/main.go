@@ -60,6 +60,12 @@ func main() {
 	sessionGroup := r.Group("/api/session")
 	controllers.RouteSessionController(sessionGroup)
 
+	rPublic := gin.Default()
+	publicGroup := rPublic.Group("/")
+	controllers.RoutePublicController(publicGroup)
+
+	go rPublic.Run(":4001")
+
 	r.Run(":4000")
 
 }
