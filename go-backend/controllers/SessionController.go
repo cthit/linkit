@@ -137,7 +137,7 @@ func handleGetAverageHour(c *gin.Context) {
 }
 
 type countries struct {
-	Clicks  string `json:"clicks"`
+	Clicks  int64  `json:"clicks"`
 	Country string `json:"country"`
 }
 
