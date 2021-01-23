@@ -21,17 +21,17 @@ export const deleteLink = name => {
 };
 
 export const getYearSessions = link => {
-    return getRequest("/links/" + link + "/sessions/year");
+    return getRequest("/session/" + link + "/year");
 };
 
 export const getMonthSessions = link => {
-    return getRequest("/links/" + link + "/sessions/month");
+    return getRequest("/session/" + link + "/month");
 };
 
 export const getAvgHourSessions = link => {
-    return getRequest("/links/" + link + "/sessions/averagehour");
+    return getRequest("/session/" + link + "/averagehour");
 };
 
 export const getCountrySessions = link => {
-    return getRequest("/links/" + link + "/sessions/countries");
+    return getRequest("/session/" + link + "/countries");
 };
