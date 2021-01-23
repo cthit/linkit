@@ -24,6 +24,7 @@ const Stats = (item, close) => {
     const [dayData, setDayData] = useState([]);
     const [countryData, setCountryData] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("SE");
+    const [totalClicks, setTotalClicks] = useState(0);
     const refMap = useRef(null);
 
     useEffect(() => {
@@ -36,16 +37,20 @@ const Stats = (item, close) => {
         getAvgHourSessions(item.item.shortcut).then(data =>
             setDayData(data.data)
         );
-        getCountrySessions(item.item.shortcut).then(data =>
+        getCountrySessions(item.item.shortcut).then(data => {
+            setTotalClicks(
+                data.data.reduce((prev, curr) => {
+                    return prev + curr.clicks;
+                })
+            );
             setCountryData(
                 data.data.reduce((prev, curr) => {
                     prev[curr.country] = curr.clicks;
                     return prev;
                 }, {})
-            )
-        );
+            );
+        });
     }, []);
-
     const _yearData = {
         labels: yearData.map(item => {
             return new Date(item.month).toLocaleString("default", {
@@ -146,7 +151,7 @@ const Stats = (item, close) => {
                 </div>
                 <div className="MuiTypography-alignCenter">
                     <CountUp
-                        end={123123}
+                        end={totalClicks}
                         duration={1}
                         suffix=" total clicks"
                         className="MuiTypography-h5"
