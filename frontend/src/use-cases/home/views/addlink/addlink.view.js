@@ -14,7 +14,7 @@ export const AddLink = props => {
         return (
             <DigitTextField
                 {...fieldValues}
-                upperLabel="smrf.it/"
+                upperLabel="l.chalmers.it/"
                 outlined
                 maxLength={20}
                 size={{
