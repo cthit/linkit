@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -45,8 +46,10 @@ func panicIfErr(err error) {
 func main() {
 
 	r := gin.Default()
+	redisURI := os.Getenv("REDIS_URI")
+	cookieSecret := os.Getenv("COOKIE_SECRET")
 	// Init session middleware
-	store, err := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
+	store, err := redis.NewStore(10, "tcp", redisURI, "", []byte(cookieSecret))
 	panicIfErr(err)
 	r.Use(sessions.Sessions("LinkITSession", store))
 	r.Use(middlewares.GammaAuth())

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -22,8 +23,9 @@ type userResp struct {
 	IsAdmin   interface{}
 }
 
+var meURI = os.Getenv("GAMMA_ME")
+
 func handleGetMe(c *gin.Context) {
-	const meURI = "http://localhost:8081/api/users/me"
 	session := sessions.Default(c)
 	token := session.Get("token")
 	fmt.Println(token)
