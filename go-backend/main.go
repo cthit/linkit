@@ -10,17 +10,18 @@ import (
 	"github.com/swexbe/linkit/backend/core"
 	"github.com/swexbe/linkit/backend/middlewares"
 	"github.com/swexbe/linkit/backend/postgres"
+	"gorm.io/gorm"
 )
 
-var router *gin.Engine
+var db *gorm.DB
 
 func init() {
-	db := postgres.Init()
+	db = postgres.Init()
 
 	l1 := &core.Link{
-		Shortcut: "hej",
+		Shortcut: "hej2",
 		LinkURL:  "google.se",
-		Creator:  "kalle",
+		Creator:  "admin",
 	}
 
 	s1 := &core.Session{
@@ -51,8 +52,11 @@ func main() {
 	r.Use(middlewares.GammaAuth())
 
 	userGroup := r.Group("/user")
-
 	controllers.RouteUserController(userGroup)
+
+	linkGroup := r.Group("/links")
+	controllers.RouteLinkController(linkGroup, db)
+
 	r.GET("/hello", func(c *gin.Context) {
 		c.String(200, "hello")
 	})
