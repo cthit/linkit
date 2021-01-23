@@ -137,8 +137,8 @@ func handleGetAverageHour(c *gin.Context) {
 }
 
 type countries struct {
-	Clicks string    `json:"clicks"`
-	Hour   time.Time `json:"country"`
+	Clicks  string `json:"clicks"`
+	Country string `json:"country"`
 }
 
 func handleGetCountries(c *gin.Context) {
@@ -176,7 +176,7 @@ func handleGetCountries(c *gin.Context) {
 func RouteSessionController(r *gin.RouterGroup) {
 	r.GET("/:id/year", handleGetYear)
 	r.GET("/:id/month", handleGetMonth)
-	r.GET("/:id/averageHour", handleGetAverageHour)
+	r.GET("/:id/averagehour", handleGetAverageHour)
 	r.GET("/:id/countries", handleGetCountries)
 
 }
