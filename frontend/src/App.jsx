@@ -15,7 +15,7 @@ import LinkITHeaderView from "./common/header/";
 
 const App = () => {
     const [isAdmin, setIsAdmin] = useState(false);
-    useGamma("/api/me", "/api/auth");
+    useGamma("/api/user/me", "/api/auth");
 
     const me = useGammaMe();
 
