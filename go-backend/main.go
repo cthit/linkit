@@ -51,15 +51,14 @@ func main() {
 	r.Use(sessions.Sessions("LinkITSession", store))
 	r.Use(middlewares.GammaAuth())
 
-	userGroup := r.Group("/user")
-	controllers.RouteUserController(userGroup)
-
-	linkGroup := r.Group("/links")
+	linkGroup := r.Group("/api/links")
 	controllers.RouteLinkController(linkGroup, db)
 
-	r.GET("/hello", func(c *gin.Context) {
-		c.String(200, "hello")
-	})
+	userGroup := r.Group("/api/user")
+	controllers.RouteUserController(userGroup)
+
+	sessionGroup := r.Group("/api/session")
+	controllers.RouteSessionController(sessionGroup)
 
 	r.Run(":4000")
 

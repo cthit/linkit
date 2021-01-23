@@ -43,18 +43,17 @@ func handleDeleteLink(c *gin.Context) {
 	session := sessions.Default(c)
 	cid := session.Get("cid").(string)
 	isAdmin := session.Get("isAdmin").(bool)
-	var link core.Link
 	id := c.Param("id")
-	res := db.Where(&core.Link{Shortcut: id}).First(&link)
-	if res.Error != nil {
-		c.AbortWithError(500, res.Error)
+	isOwner, link, err := isOwner(id, cid)
+	if err != nil {
+		c.AbortWithError(500, err)
 		return
 	}
-	if link.Creator != cid && !isAdmin {
+	if !isOwner && !isAdmin {
 		c.AbortWithStatus(403)
 		return
 	}
-	db.Delete(&link)
+	res := db.Delete(&link)
 	if res.Error != nil {
 		c.AbortWithError(500, res.Error)
 		return
