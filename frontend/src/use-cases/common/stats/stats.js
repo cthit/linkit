@@ -27,10 +27,16 @@ const Stats = (item, close) => {
     const refMap = useRef(null);
 
     useEffect(() => {
-        getYearSessions().then(data => setYearData(data.data));
-        getMonthSessions().then(data => setMonthData(data.data));
-        getAvgHourSessions().then(data => setDayData(data.data));
-        getCountrySessions().then(data =>
+        getYearSessions(item.item.shortcut).then(data =>
+            setYearData(data.data)
+        );
+        getMonthSessions(item.item.shortcut).then(data =>
+            setMonthData(data.data)
+        );
+        getAvgHourSessions(item.item.shortcut).then(data =>
+            setDayData(data.data)
+        );
+        getCountrySessions(item.item.shortcut).then(data =>
             setCountryData(
                 data.data.reduce((prev, curr) => {
                     prev[curr.country] = curr.clicks;
