@@ -9,12 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type Product struct {
-	gorm.Model
-	Code  string
-	Price uint
-}
-
 func Init() *gorm.DB {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
