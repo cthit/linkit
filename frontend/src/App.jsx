@@ -27,7 +27,7 @@ const App = () => {
 
     return (
         <DigitHeader
-            title="LinkIT"
+            title="LinkIT🔗"
             headerRowProps={{
                 flex: "1",
                 justifyContent: "space-between",
