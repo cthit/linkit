@@ -53,7 +53,7 @@ func handleDeleteLink(c *gin.Context) {
 		c.AbortWithStatus(403)
 		return
 	}
-	res := db.Delete(&link)
+	res := db.Unscoped().Delete(&link)
 	if res.Error != nil {
 		c.AbortWithError(500, res.Error)
 		return
