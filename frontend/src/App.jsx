@@ -20,7 +20,6 @@ const App = () => {
     const me = useGammaMe();
 
     useEffect(() => {
-        console.log(me)
         if (me) {
             setIsAdmin(!!me.isAdmin);
         }

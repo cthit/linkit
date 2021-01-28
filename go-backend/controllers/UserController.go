@@ -22,7 +22,7 @@ type userResp struct {
 	Nick      string `json:"nick" binding:"required"`
 	AvatarURL string `json:"avatarUrl" binding:"required"`
 	Cid       string `json:"cid" binding:"required"`
-	IsAdmin   bool
+	IsAdmin   bool   `json:"isAdmin" binding:"required"`
 }
 
 var meURI = os.Getenv("GAMMA_ME")
