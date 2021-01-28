@@ -23,7 +23,7 @@ func handleRedirectShortcut(c *gin.Context) {
 	c.Redirect(302, link.LinkURL)
 	ip := c.ClientIP()
 
-	country := c.Request.Header.Get("cf-country")
+	country := c.Request.Header.Get("CF-IPCountry")
 	if country == "" {
 		// Default to sweden if cloudflare is bork
 		country = "SE"
