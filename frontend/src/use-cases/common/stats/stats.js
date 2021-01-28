@@ -132,10 +132,10 @@ const Stats = (item, close) => {
         ],
     };
     return (
-        <div style={{ minWidth: "560px" }}>
+        <div >
             <DigitLayout.Column margin="50px">
                 <div>
-                    <DigitText.Heading4 text={item.item.shortcut} alignCenter />
+                    <DigitText.Heading4 text={"l.chalmers.it/" + item.item.shortcut} alignCenter />
                     <a href={item.item.linkurl}>
                         <DigitText.Subtitle2
                             text={item.item.linkurl}
