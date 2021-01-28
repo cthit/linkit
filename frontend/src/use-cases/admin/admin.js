@@ -25,7 +25,7 @@ const Admin = () => {
     }, []);
     return (
         <div style={style}>
-            <LinkList links={links} onDelete={_deleteLink} />
+            <LinkList admin={true} links={links} onDelete={_deleteLink} />
         </div>
     );
 };

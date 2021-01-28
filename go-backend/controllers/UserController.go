@@ -22,7 +22,7 @@ type userResp struct {
 	Nick      string `json:"nick" binding:"required"`
 	AvatarURL string `json:"avatarUrl" binding:"required"`
 	Cid       string `json:"cid" binding:"required"`
-	IsAdmin   interface{}
+	IsAdmin   bool
 }
 
 var meURI = os.Getenv("GAMMA_ME")
@@ -30,7 +30,7 @@ var meURI = os.Getenv("GAMMA_ME")
 func handleGetMe(c *gin.Context) {
 
 	if isDev == "true" {
-		c.JSON(200, gin.H{"nick": "admin", "cid": "admin", "avatarUrl": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png"})
+		c.JSON(200, gin.H{"isAdmin": true, "nick": "admin", "cid": "admin", "avatarUrl": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png"})
 		return
 	}
 
@@ -53,7 +53,7 @@ func handleGetMe(c *gin.Context) {
 			genericError(err, c)
 			return
 		}
-		resp.IsAdmin = session.Get("isAdmin")
+		resp.IsAdmin = session.Get("isAdmin").(bool)
 		c.JSON(200, resp)
 
 	} else {

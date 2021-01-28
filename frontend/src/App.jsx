@@ -20,10 +20,11 @@ const App = () => {
     const me = useGammaMe();
 
     useEffect(() => {
+        console.log(me)
         if (me) {
             setIsAdmin(!!me.isAdmin);
         }
-    }, []);
+    }, [me]);
 
     return (
         <DigitHeader
@@ -38,11 +39,11 @@ const App = () => {
             renderMain={() => (
                 <>
                     <Switch>
-                        <Route exact path="/" component={Home} />
                         <Route
                             path="/admin"
                             component={isAdmin ? Admin : NotAllowed}
                         />
+                        <Route exact path="/" component={Home} />
                         <Route path="/" component={NotFound} />
                     </Switch>
                 </>
