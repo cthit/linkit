@@ -44,7 +44,7 @@ const Stats = (item, close) => {
                 }, {})
             );
         });
-    }, []);
+    }, [item.item.shortcut]);
     const _yearData = {
         labels: yearData.map(item => {
             return new Date(item.month).toLocaleString("default", {
