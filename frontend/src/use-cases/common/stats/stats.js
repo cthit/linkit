@@ -11,12 +11,6 @@ import {
 import { VectorMap } from "react-jvectormap";
 import { getCountryName } from "./stupid";
 
-const styles = {
-    dialogPaper: {
-        minHeight: "80vh",
-        maxHeight: "80vh",
-    },
-};
 
 const Stats = (item, close) => {
     const [yearData, setYearData] = useState([]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { DigitList, useDigitCustomDialog } from "@cthit/react-digit-components";
 import LinkItem from "./linkitem.component";
 import Stats from "../stats";
