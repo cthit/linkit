@@ -41,7 +41,7 @@ const Stats = (item, close) => {
             setTotalClicks(
                 data.data.reduce((prev, curr) => {
                     return prev + curr.clicks;
-                })
+                }, 0)
             );
             setCountryData(
                 data.data.reduce((prev, curr) => {
