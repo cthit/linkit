@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var isDev = os.Getenv("dev")
+var isDev = os.Getenv("DEV")
 
 func genericError(err error, c *gin.Context) {
 	fmt.Println(err.Error())
@@ -31,6 +31,7 @@ func handleGetMe(c *gin.Context) {
 
 	if isDev == "true" {
 		c.JSON(200, gin.H{"nick": "admin", "cid": "admin", "avatarUrl": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png"})
+		return
 	}
 
 	session := sessions.Default(c)
