@@ -18,6 +18,7 @@ var clientSecret = os.Getenv("GAMMA_CLIENT_SECRET")
 var tokenURI = os.Getenv("GAMMA_TOKEN")
 var authorizationURI = os.Getenv("GAMMA_AUTH")
 var redirectURI = os.Getenv("GAMMA_REDIRECT")
+var isDev = os.Getenv("dev")
 
 type code struct {
 	Code string `json:"code" binding:"required"`
@@ -53,6 +54,15 @@ func GammaAuth() gin.HandlerFunc {
 		// User is authenticated
 		if session.Get("token") != nil {
 			fmt.Println("logged in")
+			c.Next()
+			return
+		}
+
+		if isDev == "true" {
+			session.Set("token", "token")
+			session.Set("cid", "admin")
+			session.Set("isAdmin", true)
+			session.Save()
 			c.Next()
 			return
 		}

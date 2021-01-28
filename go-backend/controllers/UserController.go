@@ -10,6 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var isDev = os.Getenv("dev")
+
 func genericError(err error, c *gin.Context) {
 	fmt.Println(err.Error())
 	c.String(500, "Internal server error")
@@ -26,6 +28,11 @@ type userResp struct {
 var meURI = os.Getenv("GAMMA_ME")
 
 func handleGetMe(c *gin.Context) {
+
+	if isDev == "true" {
+		c.JSON(200, gin.H{"nick": "admin", "cid": "admin", "avatarUrl": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png"})
+	}
+
 	session := sessions.Default(c)
 	token := session.Get("token")
 	fmt.Println(token)

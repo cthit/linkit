@@ -22,18 +22,18 @@ services:
     #     depends_on:
     #         - redis
     #         - gamma-backend
-    frontend:
-        build:
-            context: ./frontend
-            dockerfile: dev.Dockerfile
-        image: linkit_frontend:dev
-        networks:
-            - mat
-        ports:
-            - 3001:3000
-        volumes:
-            - ./frontend/src:/usr/src/app/src
-            - ./frontend/public:/usr/src/app/public
+    # frontend:
+    #     build:
+    #         context: ./frontend
+    #         dockerfile: dev.Dockerfile
+    #     image: linkit_frontend:dev
+    #     networks:
+    #         - mat
+    #     ports:
+    #         - 3001:3000
+    #     volumes:
+    #         - ./frontend/src:/usr/src/app/src
+    #         - ./frontend/public:/usr/src/app/public
     adminer:
         image: adminer
         ports:
