@@ -33,7 +33,7 @@ const App = () => {
                 justifyContent: "space-between",
             }}
             renderHeader={() => {
-                return <LinkITHeaderView />;
+                return <LinkITHeaderView isAdmin={isAdmin}/>;
             }}
             renderMain={() => (
                 <>
