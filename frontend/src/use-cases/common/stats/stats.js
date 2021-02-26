@@ -11,7 +11,6 @@ import {
 import { VectorMap } from "react-jvectormap";
 import { getCountryName } from "./stupid";
 
-
 const Stats = (item, close) => {
     const [yearData, setYearData] = useState([]);
     const [monthData, setMonthData] = useState([]);
@@ -132,10 +131,13 @@ const Stats = (item, close) => {
         ],
     };
     return (
-        <div >
-            <DigitLayout.Column margin="50px">
+        <div>
+            <DigitLayout.Column margin="0px">
                 <div>
-                    <DigitText.Heading4 text={"l.chalmers.it/" + item.item.shortcut} alignCenter />
+                    <DigitText.Heading4
+                        text={"l.chalmers.it/" + item.item.shortcut}
+                        alignCenter
+                    />
                     <a href={item.item.linkurl}>
                         <DigitText.Subtitle2
                             text={item.item.linkurl}
