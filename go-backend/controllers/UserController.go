@@ -11,7 +11,6 @@ import (
 )
 
 var isDev = os.Getenv("DEV")
-
 func genericError(err error, c *gin.Context) {
 	fmt.Println(err.Error())
 	c.String(500, "Internal server error")

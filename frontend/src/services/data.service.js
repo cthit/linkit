@@ -35,7 +35,6 @@ export const getAvgHourSessions = link => {
 export const getCountrySessions = link => {
     return getRequest("/session/" + link + "/countries");
 };
-
 export const logOut = () => {
     return postRequest("/logout");
 };
