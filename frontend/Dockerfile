@@ -7,6 +7,7 @@ COPY yarn.lock ./
 RUN yarn
 RUN yarn add react-scripts@3.4.1 -g
 COPY . ./
+ENV NODE_ENV=production
 RUN yarn run build
 
 # production environment

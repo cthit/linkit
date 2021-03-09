@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router";
 import Admin from "./use-cases/admin";
@@ -23,7 +23,7 @@ const App = () => {
         if (me) {
             setIsAdmin(!!me.isAdmin);
         }
-    }, []);
+    }, [me]);
 
     return (
         <DigitHeader
@@ -33,16 +33,16 @@ const App = () => {
                 justifyContent: "space-between",
             }}
             renderHeader={() => {
-                return <LinkITHeaderView />;
+                return <LinkITHeaderView isAdmin={isAdmin}/>;
             }}
             renderMain={() => (
                 <>
                     <Switch>
-                        <Route exact path="/" component={Home} />
                         <Route
                             path="/admin"
                             component={isAdmin ? Admin : NotAllowed}
                         />
+                        <Route exact path="/" component={Home} />
                         <Route path="/" component={NotFound} />
                     </Switch>
                 </>

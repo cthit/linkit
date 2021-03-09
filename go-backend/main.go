@@ -7,6 +7,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/swexbe/linkit/backend/controllers"
 	"github.com/swexbe/linkit/backend/core"
 	"github.com/swexbe/linkit/backend/middlewares"
@@ -17,6 +18,7 @@ import (
 var db *gorm.DB
 
 func init() {
+	godotenv.Load()
 	db = postgres.Init()
 
 	l1 := &core.Link{

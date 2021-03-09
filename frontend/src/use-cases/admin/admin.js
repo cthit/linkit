@@ -10,6 +10,8 @@ const Admin = () => {
         paddingTop: "10px",
         paddingLeft: "10%",
         paddingRight: "10%",
+        overflow: "hidden",
+        width: "100%",
     };
 
     const _deleteLink = name => {
@@ -25,7 +27,7 @@ const Admin = () => {
     }, []);
     return (
         <div style={style}>
-            <LinkList links={links} onDelete={_deleteLink} />
+            <LinkList admin={true} links={links} onDelete={_deleteLink} />
         </div>
     );
 };

@@ -11,13 +11,6 @@ import {
 import { VectorMap } from "react-jvectormap";
 import { getCountryName } from "./stupid";
 
-const styles = {
-    dialogPaper: {
-        minHeight: "80vh",
-        maxHeight: "80vh",
-    },
-};
-
 const Stats = (item, close) => {
     const [yearData, setYearData] = useState([]);
     const [monthData, setMonthData] = useState([]);
@@ -41,7 +34,7 @@ const Stats = (item, close) => {
             setTotalClicks(
                 data.data.reduce((prev, curr) => {
                     return prev + curr.clicks;
-                })
+                }, 0)
             );
             setCountryData(
                 data.data.reduce((prev, curr) => {
@@ -50,7 +43,7 @@ const Stats = (item, close) => {
                 }, {})
             );
         });
-    }, []);
+    }, [item.item.shortcut]);
     const _yearData = {
         labels: yearData.map(item => {
             return new Date(item.month).toLocaleString("default", {
@@ -138,10 +131,13 @@ const Stats = (item, close) => {
         ],
     };
     return (
-        <div style={{ minWidth: "560px" }}>
-            <DigitLayout.Column margin="50px">
+        <div>
+            <DigitLayout.Column margin="0px">
                 <div>
-                    <DigitText.Heading4 text={item.item.shortcut} alignCenter />
+                    <DigitText.Heading4
+                        text={"l.chalmers.it/" + item.item.shortcut}
+                        alignCenter
+                    />
                     <a href={item.item.linkurl}>
                         <DigitText.Subtitle2
                             text={item.item.linkurl}

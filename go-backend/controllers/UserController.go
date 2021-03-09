@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var isDev = os.Getenv("DEV")
 func genericError(err error, c *gin.Context) {
 	fmt.Println(err.Error())
 	c.String(500, "Internal server error")
@@ -20,12 +21,18 @@ type userResp struct {
 	Nick      string `json:"nick" binding:"required"`
 	AvatarURL string `json:"avatarUrl" binding:"required"`
 	Cid       string `json:"cid" binding:"required"`
-	IsAdmin   interface{}
+	IsAdmin   bool   `json:"isAdmin" binding:"required"`
 }
 
 var meURI = os.Getenv("GAMMA_ME")
 
 func handleGetMe(c *gin.Context) {
+
+	if isDev == "true" {
+		c.JSON(200, gin.H{"isAdmin": true, "nick": "admin", "cid": "admin", "avatarUrl": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png"})
+		return
+	}
+
 	session := sessions.Default(c)
 	token := session.Get("token")
 	fmt.Println(token)
@@ -45,7 +52,7 @@ func handleGetMe(c *gin.Context) {
 			genericError(err, c)
 			return
 		}
-		resp.IsAdmin = session.Get("isAdmin")
+		resp.IsAdmin = session.Get("isAdmin").(bool)
 		c.JSON(200, resp)
 
 	} else {

@@ -11,6 +11,8 @@ const Home = () => {
         paddingTop: "10px",
         paddingLeft: "10%",
         paddingRight: "10%",
+        overflow: "hidden",
+        width: "100%",
     };
 
     const addLink = link => {
