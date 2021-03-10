@@ -49,12 +49,16 @@ func handleDeleteLink(c *gin.Context) {
 		c.AbortWithError(500, err)
 		return
 	}
-	if !isOwner && !isAdmin {
+	if !(isOwner || isAdmin) {
 		c.AbortWithStatus(403)
 		return
 	}
-	res := db.Unscoped().Delete(&link)
-	if res.Error != nil {
+
+	if res := db.Unscoped().Where("link_ref = ?", link.ID).Delete(core.Session{}); res.Error != nil {
+		c.AbortWithError(500, res.Error)
+		return
+	}
+	if res := db.Unscoped().Delete(&link); res.Error != nil {
 		c.AbortWithError(500, res.Error)
 		return
 	}
