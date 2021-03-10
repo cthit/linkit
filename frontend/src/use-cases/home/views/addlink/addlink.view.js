@@ -34,7 +34,7 @@ export const AddLink = props => {
         linkurl: yup
             .string()
             .url("Link must be a valid URL")
-            .min("URL can not be empty")
+            .min(1, "URL can not be empty")
             .required("Linkurl is required"),
     });
 
