@@ -1,17 +1,19 @@
-.MuiList-subheader {
-    padding-top: 0;
+html, body, #root, .app{
+    /* Height and width fallback for older browsers. */
+    height: 100%;
     width: 100%;
+
+    /* Set the height to match that of the viewport. */
+    height: 100vh;
+
+    /* Set the width to match that of the viewport. */
+    width: 100vw;
+
+    /* Remove any browser-default margins. */
+    margin: 0;
 }
 
-.MuiDialog-paperWidthSm {
-    max-width: 1200px;
-    width: 100%;
-}
-
-.MuiTypography-root {
-    overflow: hidden;
-}
-
-body {
-    margin: 0px;
+.app {
+    display: flex;
+    flex-direction: row;
 }

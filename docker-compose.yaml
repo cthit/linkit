@@ -3,37 +3,46 @@ networks:
     gamma:
     mat:
 services:
-    # backend:
-    #     build:
-    #         context: ./backend
-    #         dockerfile: dev.Dockerfile
-    #     image: linkit_backend:dev
-    #     ports:
-    #         - 4000:4000
-    #         - 4001:4001
-    #     volumes:
-    #         - ./backend:/usr/src/app
-    #     environment:
-    #         ADMINS: admin
-    #         REDIRECT_URL: "localhost:3001"
-    #     networks:
-    #         - mat
-    #         - gamma
-    #     depends_on:
-    #         - redis
-    #         - gamma-backend
-    frontend:
+    backend:
         build:
-            context: ./frontend
-            dockerfile: dev.Dockerfile
-        image: linkit_frontend:dev
+            context: ./go-backend
+            dockerfile: Dockerfile
+        image: linkit_backend:dev
+        ports:
+            - 4000:4000
+            - 4001:4001
+        volumes:
+            - ./backend:/usr/src/app
+        environment:
+            ADMINS: admin
+            REDIRECT_URL: "localhost:3001"
+            DEV: true
+            COOKIE_SECRET: secret
+            DB_HOST: db
+            DB_USER: postgres
+            DB_PASS: example
+            DB_NAME: bookit
+            DB_PORT: 5432
+            REDIS_URI: redis:6379
         networks:
             - mat
-        ports:
-            - 3001:3000
-        volumes:
-            - ./frontend/src:/usr/src/app/src
-            - ./frontend/public:/usr/src/app/public
+            - gamma
+        depends_on:
+            - redis
+            - gamma-backend
+            - db
+    # frontend:
+    #     build:
+    #         context: ./frontend
+    #         dockerfile: dev.Dockerfile
+    #     image: linkit_frontend:dev
+    #     networks:
+    #         - mat
+    #     ports:
+    #         - 3001:3000
+    #     volumes:
+    #         - ./frontend/src:/usr/src/app/src
+    #         - ./frontend/public:/usr/src/app/public
     adminer:
         image: adminer
         ports:

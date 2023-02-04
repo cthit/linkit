@@ -1,0 +1,27 @@
+.menu {
+    width: 200px;
+    min-width: 200px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-link {
+    line-height: 1;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.menu-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.menu-divider {
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin: 0px;
+    width: 90%;
+    align-self: center;
+}
