@@ -36,4 +36,5 @@ html, body, #root, .app{
     gap: 10px;
     overflow: visible;
     height: fit-content;
+    justify-content: center;
 }

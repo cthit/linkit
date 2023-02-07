@@ -241,7 +241,7 @@ function UserPage() {
             <div className="linkit-row">
                 <Card
                     style={{
-                        maxWidth: "700px",
+                        maxWidth: "1500px",
                         minWidth: "300px",
                         flexGrow: 1,
                         flexBasis: "300px",
@@ -253,7 +253,7 @@ function UserPage() {
                             className="chart-container"
                             style={{
                                 position: "relative",
-                                height: "300px",
+                                height: "330px",
                             }}
                         >
                             <Line options={lineOptions} data={data} />
@@ -263,7 +263,7 @@ function UserPage() {
                 </Card>
                 <Card
                     style={{
-                        maxWidth: "700px",
+                        maxWidth: "1500px",
                         minWidth: "300px",
                         flexGrow: 1,
                         flexBasis: "300px",
@@ -275,7 +275,7 @@ function UserPage() {
                             className="chart-container"
                             style={{
                                 position: "relative",
-                                height: "300px",
+                                height: "330px",
                                 width: "100%",
                             }}
                         >
@@ -288,7 +288,7 @@ function UserPage() {
             <div className="linkit-row">
                 <Card
                     style={{
-                        maxWidth: "700px",
+                        maxWidth: "1500px",
                         minWidth: "300px",
                         flexGrow: 1,
                         flexBasis: "300px",
@@ -300,7 +300,7 @@ function UserPage() {
                             className="chart-container"
                             style={{
                                 position: "relative",
-                                height: "300px",
+                                height: "330px",
                             }}
                         >
                             <Line options={lineOptions} data={data} />
@@ -310,7 +310,7 @@ function UserPage() {
                 </Card>
                 <Card
                     style={{
-                        maxWidth: "700px",
+                        maxWidth: "1500px",
                         minWidth: "300px",
                         flexGrow: 1,
                         flexBasis: "300px",
@@ -322,7 +322,7 @@ function UserPage() {
                             projection="geoMercator"
                             style={{
                                 position: "relative",
-                                height: "300px",
+                                height: "330px",
                                 width: "100%",
                             }}
                         >
@@ -345,10 +345,14 @@ function UserPage() {
                                 }
                             </Geographies>
                         </ComposableMap>
-
-                        <Card.Title>Aggregated Clicks HOD</Card.Title>
+                        <Card.Title>Clicks per Country</Card.Title>
                     </Card.Body>
                 </Card>
+            </div>
+            <div className="linkit-row">
+                <footer className="fas fa-print me-3 text-secondary">
+                    Made by digIT'20
+                </footer>
             </div>
         </div>
     );
