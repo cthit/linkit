@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { Card } from "react-bootstrap";
+import CountUp from "react-countup";
 
 export const options = {
     responsive: true,
@@ -59,13 +60,119 @@ function UserPage() {
     return (
         <div className="linkit-page">
             <div className="linkit-row">
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        flexWrap: "wrap",
+                        flexBasis: "500px",
+                        flexGrow: 1,
+                        height: "fit-content",
+                    }}
+                >
+                    <Card
+                        style={{
+                            maxWidth: "700px",
+                            minWidth: "200px",
+                            flexGrow: 1,
+                            flexBasis: "200px",
+                            height: "fit-content",
+                        }}
+                    >
+                        <Card.Body>
+                            <CountUp
+                                className="h2 text-secondary"
+                                end={5231251312}
+                                duration={2}
+                                // start={100 - 30}
+                                useEasing={true}
+                            />
+                            <h6 className="card-title">No. Links</h6>
+                        </Card.Body>
+                    </Card>
+                    <Card
+                        style={{
+                            maxWidth: "700px",
+                            minWidth: "200px",
+                            flexGrow: 1,
+                            flexBasis: "200px",
+                            height: "fit-content",
+                        }}
+                    >
+                        <Card.Body>
+                            <CountUp
+                                className="h2 text-secondary"
+                                end={5231251312}
+                                duration={2}
+                                // start={100 - 30}
+                                useEasing={true}
+                            />
+                            <h6 className="card-title">No. Links</h6>
+                        </Card.Body>
+                    </Card>
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        width: "100%",
+                        flexWrap: "wrap",
+                        flexBasis: "500px",
+                        flexGrow: 1,
+                    }}
+                >
+                    <Card
+                        style={{
+                            maxWidth: "700px",
+                            minWidth: "200px",
+                            flexGrow: 1,
+                            flexBasis: "200px",
+                            height: "fit-content",
+                        }}
+                    >
+                        <Card.Body>
+                            <CountUp
+                                className="h2 text-secondary"
+                                end={5231251312}
+                                duration={2}
+                                // start={100 - 30}
+                                useEasing={true}
+                            />
+                            <h6 className="card-title">No. Links</h6>
+                        </Card.Body>
+                    </Card>
+                    <Card
+                        style={{
+                            maxWidth: "700px",
+                            minWidth: "200px",
+                            flexGrow: 1,
+                            flexBasis: "200px",
+                            height: "fit-content",
+                        }}
+                    >
+                        <Card.Body>
+                            <CountUp
+                                className="h2 text-secondary"
+                                end={5231251312}
+                                duration={2}
+                                // start={100 - 30}
+                                useEasing={true}
+                            />
+                            <h6 className="card-title">No. Links</h6>
+                        </Card.Body>
+                    </Card>
+                </div>
+            </div>
+            <div className="linkit-row">
                 <Card
                     style={{
                         maxWidth: "700px",
                         minWidth: "300px",
                         flexGrow: 1,
                         flexBasis: "300px",
-                        height: "400px",
+                        height: "fit-content",
                     }}
                 >
                     <Card.Body>
@@ -74,8 +181,7 @@ function UserPage() {
                             className="chart-container"
                             style={{
                                 position: "relative",
-                                height: "200px",
-                                width: "100%",
+                                height: "300px",
                             }}
                         >
                             <Line options={options} data={data} />
@@ -88,7 +194,7 @@ function UserPage() {
                         minWidth: "300px",
                         flexGrow: 1,
                         flexBasis: "300px",
-                        height: "400px",
+                        height: "fit-content",
                     }}
                 >
                     <Card.Body>
