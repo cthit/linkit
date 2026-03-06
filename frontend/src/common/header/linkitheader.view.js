@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { logOut } from "../../services/data.service";
 
 const LinkITHeader = ({ isAdmin }) => {
-    useGamma();
+    useGamma("/api/user/me", "/api/auth");
     const history = useHistory();
     return (
         <DigitGammaActions
@@ -22,14 +22,14 @@ const LinkITHeader = ({ isAdmin }) => {
             signOut={() => logOut()}
             size={{ width: "min-content" }}
             frontendUrl={
-                process.env.NODE_ENV === "development"
+                process.env.REACT_APP_GAMMA_URL || (process.env.NODE_ENV === "development"
                     ? "http://localhost:3000"
-                    : "https://gamma.chalmers.it"
+                    : "https://auth.chalmers.it")
             }
             backendUrl={
                 process.env.NODE_ENV === "development"
                     ? "http://localhost:8081/api"
-                    : "https://gamma.chalmers.it"
+                    : "https://auth.chalmers.it"
             }
         />
     );

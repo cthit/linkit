@@ -100,8 +100,8 @@ func handleGetAllLinks(c *gin.Context) {
 func RouteLinkController(r *gin.RouterGroup, _db *gorm.DB) {
 	db = _db
 	v = validator.New()
-	r.GET("/", handleGetLinks)
-	r.POST("/", handleAddLink)
+	r.GET("", handleGetLinks)
+	r.POST("", handleAddLink)
 	r.DELETE("/:id", handleDeleteLink)
 	r.GET("/all", handleGetAllLinks)
 

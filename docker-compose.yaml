@@ -1,27 +1,29 @@
-version: "3"
 networks:
     gamma:
     mat:
 services:
-    # backend:
-    #     build:
-    #         context: ./backend
-    #         dockerfile: dev.Dockerfile
-    #     image: linkit_backend:dev
-    #     ports:
-    #         - 4000:4000
-    #         - 4001:4001
-    #     volumes:
-    #         - ./backend:/usr/src/app
-    #     environment:
-    #         ADMINS: admin
-    #         REDIRECT_URL: "localhost:3001"
-    #     networks:
-    #         - mat
-    #         - gamma
-    #     depends_on:
-    #         - redis
-    #         - gamma-backend
+    backend:
+        build:
+            context: ./go-backend
+        image: linkit_backend:dev
+        network_mode: "service:frontend"
+        volumes:
+            - ./backend:/usr/src/app
+        environment:
+            ADMINS: admin,gustafas
+            REDIRECT_URL: "localhost:3001"
+            OIDC_CLIENT_ID: "id"
+            OIDC_CLIENT_SECRET: "secret"
+            OIDC_REDIRECT: "http://localhost:3001/auth/account/callback"
+            OIDC_ISSUER: "https://auth.chalmers.it"
+            DB_USER: postgres
+            DB_PORT: 5432
+            DB_PASS: example
+            DB_NAME: bookit
+            DB_HOST: db
+            REDIS_URI: redis:6379
+        depends_on:
+            - redis
     frontend:
         build:
             context: ./frontend
@@ -31,6 +33,8 @@ services:
             - mat
         ports:
             - 3001:3000
+            - 4000:4000
+            - 4001:4001
         volumes:
             - ./frontend/src:/usr/src/app/src
             - ./frontend/public:/usr/src/app/public
@@ -57,67 +61,3 @@ services:
             - mat
         ports:
             - 6379:6379
-    gamma-frontend:
-        image: cthit/gamma-frontend:development
-        environment:
-            HTTP_PROXY: http://gamma-backend:8081
-        depends_on:
-            - gamma-backend
-        networks:
-            - gamma
-        ports:
-            - 3000:3000
-
-    gamma-backend:
-        image: cthit/gamma-backend
-        environment:
-            # Default admin user name = admin
-            # Default admin password  = password
-
-            DB_USER: user
-            DB_PASSWORD: password
-            DB_HOST: gamma-db
-            DB_PORT: 5432
-            DB_NAME: postgres
-
-            REDIS_HOST: gamma-redis
-            REDIS_PASSWORD: ""
-            REDIS_PORT: 6379
-
-            GOTIFY_KEY: "123abc"
-            GOTIFY_URL: http://gamma-gotify:8080/mail
-
-            DEFAULT_CLIENT_NAME: demo
-            DEFAULT_CLIENT_ID: id
-            DEFAULT_CLIENT_SECRET: secret
-            DEFAULT_REDIRECT_URI: http://localhost:3001/auth/account/callback
-
-            SERVER_PORT: 8081
-            SUCCESSFUL_LOGIN: http://localhost:3000
-            CORS_ALLOWED_ORIGIN: http://localhost:3000
-            BACKEND_URI: http://localhost:8081
-            PRODUCTION: "false"
-            COOKIE_DOMAIN: localhost
-            IS_MOCKING_CLIENT: "true"
-        depends_on:
-            - gamma-redis
-            - gamma-db
-        networks:
-            - gamma
-            - mat
-        ports:
-            - 8081:8081
-
-    gamma-redis:
-        image: redis:5.0
-        networks:
-            - gamma
-
-    gamma-db:
-        image: postgres:10
-        environment:
-            POSTGRES_USER: user
-            POSTGRES_DB: postgres
-            POSTGRES_PASSWORD: password
-        networks:
-            - gamma

@@ -4,7 +4,10 @@ import ReactDOM from "react-dom";
 import App from "./App.jsx";
 import * as serviceWorker from "./serviceWorker";
 import { DigitProviders } from "@cthit/react-digit-components";
+import axios from "axios";
 import "./index.css";
+
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
     <DigitProviders children={<App />} />,
