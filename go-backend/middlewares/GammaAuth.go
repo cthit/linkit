@@ -52,6 +52,7 @@ func genericError(err error, c *gin.Context) {
 	c.Abort()
 }
 
+// GammaAuth is a gin middleware which handles authentication via OIDC.
 func GammaAuth() gin.HandlerFunc {
 	// Try OIDC discovery if issuer is set
 	var provider *oidc.Provider
@@ -70,11 +71,13 @@ func GammaAuth() gin.HandlerFunc {
 				ClientSecret: clientSecret,
 				Endpoint:     provider.Endpoint(),
 				RedirectURL:  redirectURI,
-				Scopes:       []string{"openid", "profile", "email"},
+				Scopes:       []string{"openid", "profile"},
 			}
 			verifier = provider.Verifier(&oidc.Config{ClientID: clientID})
 		}
 	}
+
+	discoveryFailed := oidcIssuer != "" && provider == nil
 
 	// Build a fallback auth URI using old GAMMA_AUTH if oidc discovery isn't available
 	gammaURI := os.Getenv("GAMMA_AUTH")
@@ -95,6 +98,12 @@ func GammaAuth() gin.HandlerFunc {
 			session.Set("isAdmin", true)
 			session.Save()
 			c.Next()
+			return
+		}
+
+		if discoveryFailed {
+			c.String(500, "auth provider misconfigured")
+			c.Abort()
 			return
 		}
 
@@ -184,7 +193,6 @@ func GammaAuth() gin.HandlerFunc {
 							Name              string `json:"name"`
 							Nickname          string `json:"nickname"`
 							Picture           string `json:"picture"`
-							Email             string `json:"email"`
 							Cid               string `json:"cid"`
 						}
 						if err := idToken.Claims(&claims); err == nil {
