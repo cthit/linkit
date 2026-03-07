@@ -10,7 +10,7 @@ services:
         volumes:
             - ./backend:/usr/src/app
         environment:
-            ADMINS: admin,gustafas
+            ADMINS: admin
             REDIRECT_URL: "localhost:3001"
             OIDC_CLIENT_ID: "id"
             OIDC_CLIENT_SECRET: "secret"
