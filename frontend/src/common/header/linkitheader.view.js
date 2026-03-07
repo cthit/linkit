@@ -22,9 +22,9 @@ const LinkITHeader = ({ isAdmin }) => {
             signOut={() => logOut()}
             size={{ width: "min-content" }}
             frontendUrl={
-                process.env.REACT_APP_GAMMA_URL || (process.env.NODE_ENV === "development"
+                process.env.NODE_ENV === "development"
                     ? "http://localhost:3000"
-                    : "https://auth.chalmers.it")
+                    : "https://auth.chalmers.it"
             }
             backendUrl={
                 process.env.NODE_ENV === "development"
